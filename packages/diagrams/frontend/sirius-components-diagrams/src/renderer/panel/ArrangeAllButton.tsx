@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *     Obeo - initial API and implementation
+ * Obeo - initial API and implementation
  *******************************************************************************/
 
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -29,6 +29,11 @@ import { LayoutConfiguration } from '../layout/arrange-all/useLayoutConfiguratio
 import { ArrangeAllButtonProps, ArrangeAllButtonState } from './ArrangeAllButton.types';
 
 export const ArrangeAllButton = ({ reactFlowWrapper, disabled }: ArrangeAllButtonProps) => {
+  const [subMenuAnchorEl, setSubMenuAnchorEl] = useState<HTMLElement | null>(null);
+  const [showSubMenu, setShowSubMenu] = useState(false);
+  const [selectedLayout, setSelectedLayout] = useState<LayoutConfiguration | null>(null);
+  const [formValues, setFormValues] = useState<Record<string, string>>({});
+
   const [state, setState] = useState<ArrangeAllButtonState>({
     arrangeAllInProgress: false,
     arrangeAllMenuOpen: false,
@@ -40,6 +45,7 @@ export const ArrangeAllButton = ({ reactFlowWrapper, disabled }: ArrangeAllButto
   const { layoutConfigurations } = useLayoutConfigurations();
 
   const handleArrangeAll = (layoutOptions: LayoutOptions) => {
+    setShowSubMenu(false);
     setState((prevState) => ({
       ...prevState,
       arrangeAllMenuOpen: false,
@@ -53,6 +59,35 @@ export const ArrangeAllButton = ({ reactFlowWrapper, disabled }: ArrangeAllButto
     );
   };
 
+  const handleLayoutItemClick = (event: React.MouseEvent<HTMLElement>, layoutConfiguration: LayoutConfiguration) => {
+    setSubMenuAnchorEl(event.currentTarget);
+    setShowSubMenu(true);
+    setSelectedLayout(layoutConfiguration);
+
+    const initialValues: Record<string, string> = {};
+    if (layoutConfiguration.configurableOptions) {
+      layoutConfiguration.configurableOptions.forEach((option) => {
+        const defaultVal = (layoutConfiguration.layoutOptions as Record<string, string>)[option.key];
+        initialValues[option.key] = defaultVal || '';
+      });
+    }
+    setFormValues(initialValues);
+  };
+  const handleInputChange = (key: string, value: string) => {
+    setFormValues((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+  const handleLaunchCustom = () => {
+    if (!selectedLayout) return;
+    const finalOptions: LayoutOptions = {
+      ...selectedLayout.layoutOptions,
+      ...formValues,
+    };
+    handleArrangeAll(finalOptions);
+  };
+
   const handleMenuToggle = () =>
     setState((prevState) => ({
       ...prevState,
@@ -63,7 +98,6 @@ export const ArrangeAllButton = ({ reactFlowWrapper, disabled }: ArrangeAllButto
       ...prevState,
       arrangeAllMenuOpen: false,
     }));
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -107,7 +141,8 @@ export const ArrangeAllButton = ({ reactFlowWrapper, disabled }: ArrangeAllButto
                 key={layoutConfiguration.id}
                 disabled={disabled}
                 data-testid={`arrange-all-${layoutConfiguration.id}`}
-                onClick={() => handleArrangeAll(layoutConfiguration.layoutOptions)}>
+                onClick={(e) => handleLayoutItemClick(e, layoutConfiguration)}
+                selected={selectedLayout?.id === layoutConfiguration.id}>
                 <ListItemIcon>{layoutConfiguration.icon}</ListItemIcon>
                 <ListItemText primary={layoutConfiguration.label} />
               </MenuItem>
@@ -115,6 +150,27 @@ export const ArrangeAllButton = ({ reactFlowWrapper, disabled }: ArrangeAllButto
           })}
         </Menu>
       ) : null}
+      <Menu
+        open={showSubMenu}
+        anchorEl={subMenuAnchorEl}
+        onClose={() => setShowSubMenu(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}>
+        <div style={{ padding: '10px' }}>
+          {selectedLayout?.configurableOptions?.map((option) => (
+            <div key={option.key} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <label>{option.label} </label>
+              <input
+                value={formValues[option.key] || ''}
+                onChange={(e) => handleInputChange(option.key, e.target.value)}
+              />
+            </div>
+          ))}
+          <MenuItem onClick={handleLaunchCustom}>
+            <ListItemText primary="Lancer" style={{ textAlign: 'center' }} />
+          </MenuItem>
+        </div>
+      </Menu>
     </>
   );
 };

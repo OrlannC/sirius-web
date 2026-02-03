@@ -17,9 +17,15 @@ export interface UseLayoutConfigurationsValue {
   layoutConfigurations: LayoutConfiguration[];
 }
 
+export interface ConfigurableOption {
+  key: string;
+  label: string;
+}
+
 export interface LayoutConfiguration {
   id: string;
   label: string;
   icon: React.JSX.Element;
   layoutOptions: LayoutOptions;
+  configurableOptions?: ConfigurableOption[];
 }
