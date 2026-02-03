@@ -101,6 +101,41 @@ const computeLabels = (
   return labels;
 };
 
+const detectBox = ((nodes:Node<any, string>[])=>{
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  
+  nodes.forEach((node) => {  
+    if(node && node.width && node.height){
+      const nodeRight = node.position.x + node.width;
+      const nodeBottom = node.position.y + node.height;
+      if (node.position.x < minX) minX = node.position.x;
+      if (node.position.y < minY) minY = node.position.y;
+      if (nodeRight > maxX) maxX = nodeRight;
+      if (nodeBottom > maxY) maxY = nodeBottom;
+    }
+  });
+
+  return [minX,minY,maxX,maxY];
+});
+
+const overlapUnselected = ((staticBox, movingBox, nodes)=>{
+  const [sMinX, sMinY, sMaxX, sMaxY] = staticBox; 
+  const [mMinX, mMinY, mMaxX, mMaxY] = movingBox; 
+  const isOverlapping = sMinX < mMaxX && sMaxX > mMinX && sMinY < mMaxY && sMaxY > mMinY;
+  if (isOverlapping && sMinX != Infinity && mMinX != Infinity) {
+    const margin = 50;
+    const shiftX = (sMaxX + margin) - mMinX;
+    nodes.forEach((node) => {
+        node.position.x += shiftX;           
+    });
+  }  
+  return nodes;
+});
+
+
 export const useArrangeAll = (reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>): UseArrangeAllValue => {
   const { getNodes, getEdges, setNodes, setEdges } = useReactFlow<Node<NodeData>, Edge<EdgeData>>();
   const store = useStoreApi<Node<NodeData>, Edge<EdgeData>>();
@@ -215,10 +250,23 @@ export const useArrangeAll = (reactFlowWrapper: React.MutableRefObject<HTMLDivEl
   };
 
   const arrangeAll = async (layoutOptions: LayoutOptions): Promise<void> => {
-    const nodes: Node<NodeData, string>[] = [...getNodes()] as Node<NodeData, DiagramNodeType>[];
+    const allNodes: Node<NodeData, string>[] = [...getNodes()] as Node<NodeData, DiagramNodeType>[];
+
+    const selectedNodes = allNodes.filter((n) => n.selected);
+    const notSelectedNodes = allNodes.filter((n) => !selectedNodes.includes(n));
+
+    const nodes: Node<NodeData, string>[] =
+      selectedNodes.length === 0 ? allNodes : (selectedNodes as Node<NodeData, DiagramNodeType>[]);
     const subNodes: Map<string, Node<NodeData, string>[]> = reverseOrdreMap(getSubNodes(nodes));
     await applyElkOnSubNodes(subNodes, nodes, layoutOptions).then(async (nodes: Node<NodeData, string>[]) => {
-      const laidOutNodesWithElk: Node<NodeData, string>[] = nodes.reverse();
+
+      const reversedLaidOut = overlapUnselected(detectBox(notSelectedNodes),detectBox(nodes.reverse()), nodes.reverse());
+
+      const laidOutNodesWithElk: Node<NodeData, string>[] = allNodes.map((node) => {
+        const modifiedNode = reversedLaidOut.find((laidOutNode) => laidOutNode.id === node.id);
+        return modifiedNode ? modifiedNode : node;
+      });
+
       laidOutNodesWithElk.filter((laidOutNode) => {
         const parentNode = nodes.find((node) => node.id === laidOutNode.parentId);
         return !parentNode || !isListData(parentNode);
