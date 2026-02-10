@@ -26,60 +26,127 @@ const createMock = () => {
   const cache = new InMemoryCache({ addTypename: true });
 
   const paletteData = { 
-    __typename: 'Palette', id: 'p1', sections: [], paletteEntries: [], quickAccessTools: [] 
+    __typename: 'Palette', id: 'p1', paletteEntries: [], quickAccessTools: []
   };
 
   const descriptionData = {
     __typename: 'DiagramDescription',
-    id: DESC_ID, name: 'DemoDesc', label: 'DemoDesc', debug: true,
-    arrangeLayoutDirection: 'DOWN', childNodeDescriptionIds: [NODE_DESC_ID],
-    nodeDescriptions: [{
-        __typename: 'NodeDescription', id: NODE_DESC_ID, label: 'Node',
-        userResizable: 'BOTH', keepAspectRatio: false, childNodeDescriptionIds: [], borderNodeDescriptionIds: []
-    }],
-    layers: [{ __typename: 'Layer', id: LAYER_ID, label: 'Layer', active: true }],
-    defaultLayer: { __typename: 'Layer', id: LAYER_ID, label: 'Layer', active: true },
-    activatedLayerIds: [LAYER_ID],
+    id: DESC_ID, 
+    label: 'DemoDesc', 
+    arrangeLayoutDirection: 'DOWN', 
+    targetObjectIdProvider: 'defaultTargetObjectIdProvider', 
+    canCreatePredicate: 'alwaysTrue', 
+    labelProvider: 'defaultLabelProvider',
+    actions: [],
     dropNodeCompatibility: [],
-    palette: paletteData
+    palette: { 
+      __typename: 'Palette', 
+      id: 'p1', 
+      paletteEntries: [], 
+      quickAccessTools: []
+    },
+    nodeDescriptions: [{
+        __typename: 'NodeDescription', 
+        id: NODE_DESC_ID, 
+        label: 'Node',
+        iconURLs: [],
+        userResizable: 'BOTH', 
+        keepAspectRatio: false, 
+        childNodeDescriptionIds: [], 
+        borderNodeDescriptionIds: []
+    }],
+    edgeDescriptions: [], 
+    dropHandler: 'defaultDropHandler',
+    dropNodeHandler: 'defaultDropNodeHandler',
+    iconURLsProvider: 'defaultIconURLsProvider'
   };
 
   const metadata = {
     __typename: 'RepresentationMetadata',
-    id: REP_ID, label: 'Demo Diagram',
+    id: REP_ID, 
+    label: 'Demo Diagram',
     kind: 'siriusComponents://representation?type=Diagram',
-    iconURLs: [], description: descriptionData
+    iconURLs: [], 
+    representationMetadataId: 'REP_META_ID', 
+    semanticData: [], 
+    targetObjectId: 'TARGET_OBJECT_ID', 
+    descriptionId: 'DESC_ID', 
+    documentation: '',
+    description: descriptionData 
   };
 
 
   const diagram = {
     __typename: 'Diagram', 
-    id: REP_ID, name: 'Demo',
-    representationKind: 'siriusComponents://representation?type=Diagram',
+    id: REP_ID, 
+    name: 'Demo',
+    kind: 'siriusComponents://representation?type=Diagram',
     targetObjectId: 'root',
+    descriptionId: DESC_ID, 
     metadata: metadata,
+    description: descriptionData,
     nodes: [
       {
-        __typename: 'Node', id: "n1", 
+        __typename: 'Node', 
+        id: "n1", 
         type: 'rectangle',
-        descriptionId: NODE_DESC_ID, layerId: LAYER_ID,
-        state: 'NORMAL', visible: true, pinned: false,
-        outsideLabels: [], borderNodes: [], childNodes: [], customizedStyleProperties: [], 
-        insideLabel: { __typename: 'InsideLabel', id: 'l1', text: 'CUSTOM RECT', style: { __typename: 'LabelStyle', labelFormat: 'standard', fontColor: 'black' } },
-        style: { __typename: 'RectangularNodeStyle', borderColor: 'black', borderSize: 1, borderStyle: 'SOLID', background: 'green', childrenLayoutStrategy: { __typename: 'FreeFormLayoutStrategy' } },
-        labelEditable: true, deletable: true, initialBorderNodePosition: 'WEST'
-      },
-
+        targetObjectId: 'TARGET_OBJ_ID',
+        targetObjectKind: 'TARGET_OBJ_KIND',
+        targetObjectLabel: 'Target Label',
+        descriptionId: NODE_DESC_ID, 
+        initialBorderNodePosition: 'WEST',
+        modifiers: [],
+        state: 'Normal', 
+        collapsingState: 'EXPANDED',
+        insideLabel: { 
+          __typename: 'InsideLabel', 
+          id: 'l1', 
+          text: 'Node Test', 
+          insideLabelLocation: 'TOP_CENTER',
+          headerSeparatorDisplayMode: 'NEVER',
+          overflowStrategy: 'ELLIPSIS',
+          textAlign: 'CENTER',
+          customizedStyleProperties: [],
+          style: { 
+            __typename: 'LabelStyle', 
+            color: 'black', 
+            iconURL: '',
+            background: 'transparent',
+            borderColor: 'transparent',
+            borderStyle: 'SOLID',
+            visibility: true,
+          }
+        },
+        outsideLabels: [],
+        style: { 
+          __typename: 'RectangularNodeStyle', 
+          background: 'white', 
+          borderColor: 'orange',
+          borderStyle: 'SOLID', 
+          childrenLayoutStrategy: { 
+            __typename: 'FreeFormLayoutStrategy',
+            kind: 'FreeForm'
+          } 
+        },
+        borderNodes: [],
+        childNodes: [], 
+        customizedStyleProperties: []
+      }
     ],
     edges: [],
     layoutData: { 
         __typename: 'DiagramLayoutData', 
         nodeLayoutData: [
-            { __typename: 'NodeLayoutData', id: "n1", position: { x: 100, y: 100 }, size: { width: 150, height: 80 } }
+            { 
+                __typename: 'NodeLayoutData', 
+                id: "n1", 
+                position: { x: 100, y: 100 }, 
+                size: { width: 150, height: 80 } 
+            }
         ],
-        edgeLayoutData: [], labelLayoutData: [] 
+        edgeLayoutData: [], 
+        labelLayoutData: [] 
     },
-    description: descriptionData
   };
 
   return new ApolloClient({ 
@@ -98,7 +165,7 @@ const createMock = () => {
             getPalette: success({ palette: paletteData })
           }
         },
-        diagramEvent: { __typename: 'DiagramRefreshedEventPayload', id: REP_ID, diagram, cause: 'REFRESH' },
+        diagramEvent: { __typename: 'DiagramRefreshedEventPayload', id: REP_ID, diagram, cause: 'refresh' },
         layoutDiagram: success({ diagram }),
         pinDiagramElement: success({ diagram }),
         hideDiagramElement: success({ diagram }),
@@ -131,7 +198,6 @@ const meta = {
                   <style>{`
                     html, body, #root { height: 100%; margin: 0; }
                     .react-flow, .react-flow__renderer, .react-flow__container { width: 100% !important; height: 100% !important; min-height: 600px !important; }
-                    .react-flow__node { z-index: 9999 !important; border: 2px solid red !important; }
                   `}</style>
                   <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
                     <Story />
