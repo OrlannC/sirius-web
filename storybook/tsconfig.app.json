@@ -22,7 +22,22 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@eclipse-sirius/sirius-components-diagrams/*": [
+        "./node_modules/@eclipse-sirius/sirius-components-diagrams/dist/*"
+      ],
+      "@eclipse-sirius/sirius-components-diagrams": [
+        "./node_modules/@eclipse-sirius/sirius-components-diagrams/dist/index.d.ts"
+      ],
+      "@eclipse-sirius/sirius-components-core/*": [
+        "./node_modules/@eclipse-sirius/sirius-components-core/dist/*"
+      ],
+      "@eclipse-sirius/sirius-components-core": [
+        "./node_modules/@eclipse-sirius/sirius-components-core/dist/index.d.ts"
+      ]
+    }
   },
   "include": ["src"]
 }
