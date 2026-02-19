@@ -37,7 +37,8 @@ const createDefaultDescription = (): GQLDiagramDescription => {
   return runtimeDescription;
 };
 
-export const buildDiagram = (id: string, label: string): GQLDiagram => {
+export const buildDiagram = (label: string): GQLDiagram => {
+  const id = 'diagram-1';
   const metadata: GQLRepresentationMetadata = {
     kind: 'siriusComponents://representation?type=Diagram',
     label: label,

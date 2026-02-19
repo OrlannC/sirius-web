@@ -67,6 +67,8 @@ export type { ILayoutEngine, INodeLayoutHandler } from './renderer/layout/Layout
 export * from './renderer/layout/layoutNode';
 export { defaultHeight, defaultWidth } from './renderer/layout/layoutParams';
 export { useLayout } from './renderer/layout/useLayout';
+export { doArrangeAll } from './renderer/layout/arrange-all/useArrangeAll';
+export { useOverlap } from './renderer/overlap/useOverlap';
 export { NodeContext } from './renderer/node/NodeContext';
 export type { NodeContextValue } from './renderer/node/NodeContext.types';
 export { NodeTypeContribution } from './renderer/node/NodeTypeContribution';
