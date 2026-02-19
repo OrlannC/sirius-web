@@ -2,9 +2,24 @@ import ELK from 'elkjs/lib/elk.bundled';
 import { doArrangeAll, type GQLDiagram } from '@eclipse-sirius/sirius-components-diagrams';
 import { type LayoutOptions } from 'elkjs/lib/elk-api';
 import type { RawDiagram } from '@eclipse-sirius/sirius-components-diagrams/renderer/layout/layout.types';
-import type { MutableRefObject } from 'react';
+import { ApolloProvider } from '@apollo/client';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
+import { useMemo, useRef, useState, useEffect, type MutableRefObject } from 'react';
+import 'reactflow/dist/style.css';
+import { SelectionContextProvider, ServerContext } from '@eclipse-sirius/sirius-components-core';
+import { DiagramRepresentation, useOverlap } from '@eclipse-sirius/sirius-components-diagrams';
+import { createMockClient } from './DiagramConstructor';
 
-export const newDiagram = async (
+if (!i18n.isInitialized) {
+  i18n.use(initReactI18next).init({
+    lng: 'en', fallbackLng: 'en',
+    resources: { en: { translation: { 'paletteSearchField.placeholder': 'Search...' } } },
+    interpolation: { escapeValue: false }
+  });
+}
+
+const newDiagram = async (
     currentDiagram: any,
     options: LayoutOptions,
     reactFlowWrapper: MutableRefObject<HTMLDivElement | null>, 
@@ -87,4 +102,47 @@ export const newDiagram = async (
         console.error("New Diagram Error", e);
         return currentDiagram;
     }
+};
+
+export const DiagramStoryWrapper = ({ args, diagramGenerator, layoutOptions }: { args:any, diagramGenerator: () => any, layoutOptions: LayoutOptions }) => {
+    const initial = useMemo(() => diagramGenerator(), [diagramGenerator]);
+    const [client, setClient] = useState(initial.client);
+    const diagramRef = useRef(initial.diagram);
+    const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
+    const { resolveNodeOverlap } = useOverlap();
+
+    const handleArrange = async () => {
+      const updatedDiagram = await newDiagram(
+          diagramRef.current, 
+          layoutOptions, 
+          reactFlowWrapper, 
+          resolveNodeOverlap
+      );
+      diagramRef.current = updatedDiagram;
+      setClient(createMockClient(updatedDiagram));
+    };
+
+    const optionsString = JSON.stringify(layoutOptions);
+
+    useEffect(() => {
+      if (args.autoLayout) {
+        handleArrange();
+      }
+    }, [args.autoLayout,optionsString]);
+
+    return (
+      <ApolloProvider client={client}>
+        <I18nextProvider i18n={i18n}>
+            <ServerContext.Provider value={{ httpOrigin: 'http://localhost' }}>
+              <SelectionContextProvider initialSelection={{ entries: [] }}>
+                  <style>{`.react-flow { width: 100% !important; height: 100% !important;
+                        min-height: 600px !important; min-width: 1100px !important; }`}</style>
+                  <div ref={reactFlowWrapper} style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <DiagramRepresentation {...args} />
+                  </div>
+              </SelectionContextProvider>
+            </ServerContext.Provider>
+        </I18nextProvider>
+      </ApolloProvider>
+    );
 };
