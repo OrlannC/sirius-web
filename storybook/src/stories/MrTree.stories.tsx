@@ -4,10 +4,10 @@ import { type ComponentProps, type MutableRefObject } from 'react';
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { fiveNodeDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
+import { FiveNodeDiagram, TwoNodeGroupDiagram, ThreeNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; direction: string; nodeNode: number;};
+type StoryCustomArgs = { autoLayout?: boolean; direction: string; nodeNode: number; edgeNode: number; edgeRoutingMode: string; wheighting: string;};
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -18,6 +18,9 @@ const meta = {
     autoLayout: { control: 'boolean' },
     direction: { control: 'select', options: ['DOWN', 'RIGHT','LEFT','UP'] },
     nodeNode: { },
+    edgeNode: { },
+    edgeRoutingMode: { control: 'select', options: ['AVOID_OVERLAP', 'MIDDLE_TO_MIDDLE', 'NONE'] },
+    wheighting: { control: 'select', options: ['MODEL_ORDER', 'DESCENDANTS', 'FAN','CONSTRAINT'] },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -27,9 +30,10 @@ const getElkMrTreeOptions = (args: StoryCustomArgs): LayoutOptions => {
   return {
     'elk.algorithm': 'mrtree',
     'elk.spacing.nodeNode': String(args.nodeNode),
+    'elk.spacing.edgeNode': String(args.edgeNode),
     'elk.direction': args.direction,
-    'elk.mrtree.weighting': 'MODEL_ORDER',
-    'elk.mrtree.edgeRoutingMode': 'AVOID_OVERLAP',
+    'elk.mrtree.weighting': args.wheighting,
+    'elk.mrtree.edgeRoutingMode': args.edgeRoutingMode,
   };
 };
 
@@ -38,11 +42,14 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     autoLayout: true,
     direction: "DOWN",
     nodeNode: 80,
+    edgeNode: 10,
+    edgeRoutingMode: 'AVOID_OVERLAP',
+    wheighting: 'MODEL_ORDER',
   },
   render: (args) => (
       <DiagramStoryWrapper 
           args={args} 
-          diagramGenerator={fiveNodeDiagram} 
+          diagramGenerator={FiveNodeDiagram} 
           layoutOptions={getElkMrTreeOptions(args)} 
       />
   )
@@ -53,12 +60,33 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     autoLayout: true,
     direction: "DOWN",
     nodeNode: 80,
+    edgeNode: 10,
+    edgeRoutingMode: 'AVOID_OVERLAP',
+    wheighting: 'MODEL_ORDER',
   },
   render: (args) => (
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={TwoNodeGroupDiagram} 
           layoutOptions={getElkMrTreeOptions(args)} 
+      />
+  )
+};
+
+export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    direction: "DOWN",
+    nodeNode: 80,
+    edgeNode: 10,
+    edgeRoutingMode: 'AVOID_OVERLAP',
+    wheighting: 'MODEL_ORDER',
+  },
+  render: (args) => (
+      <DiagramStoryWrapper
+          args={args}
+          diagramGenerator={ThreeNodeGroupDiagram}
+          layoutOptions={getElkMrTreeOptions(args)}
       />
   )
 };

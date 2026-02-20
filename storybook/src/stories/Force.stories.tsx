@@ -4,10 +4,10 @@ import { type ComponentProps, type MutableRefObject } from 'react';
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { fiveNodeDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
+import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; iterations: number; };
+type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; iterations: number; model: string; };
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -18,6 +18,7 @@ const meta = {
     autoLayout: { control: 'boolean' },
     nodeNode: { },
     iterations: { },
+    model: { control: 'select', options: ['EADES', 'FRUCHTERMAN_REINGOLD'] },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -27,21 +28,22 @@ const getElkForceOptions = (args: StoryCustomArgs): LayoutOptions => {
   return {
     'elk.algorithm': 'force',
     'elk.spacing.nodeNode': String(args.nodeNode),
-    'elk.force.model': 'FRUCHTERMAN_REINGOLD',
+    'elk.force.model': args.model,
     'elk.force.iterations': String(args.iterations),
   };
 };
 
 export const fiveNode: StoryObj<DiagramStoryArgs> = {
   args:{
-    autoLayout: false,
+    autoLayout: true,
     nodeNode: 80,
     iterations: 300,
+    model: 'FRUCHTERMAN_REINGOLD',
   },
   render: (args) => (
       <DiagramStoryWrapper 
           args={args} 
-          diagramGenerator={fiveNodeDiagram} 
+          diagramGenerator={FiveNodeDiagram} 
           layoutOptions={getElkForceOptions(args)} 
       />
   )
@@ -49,15 +51,32 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
 
 export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   args:{
-    autoLayout: false,
+    autoLayout: true,
     nodeNode: 80,
     iterations: 300,
+    model: 'FRUCHTERMAN_REINGOLD',
   },
   render: (args) => (
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={TwoNodeGroupDiagram} 
           layoutOptions={getElkForceOptions(args)} 
+      />
+  )
+};
+
+export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    iterations: 300,
+    model: 'FRUCHTERMAN_REINGOLD',
+  },
+  render: (args) => (
+      <DiagramStoryWrapper
+          args={args}
+          diagramGenerator={ThreeNodeGroupDiagram}
+          layoutOptions={getElkForceOptions(args)}
       />
   )
 };

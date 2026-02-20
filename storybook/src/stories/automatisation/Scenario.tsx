@@ -1,6 +1,6 @@
 import { addEdge, addNode, buildDiagram, createMockClient } from "./DiagramConstructor";
 
-export const fiveNodeDiagram = () => {
+export const FiveNodeDiagram = () => {
   let d = buildDiagram('First Diagram');
   d = addNode(d, { id: 'n1', label: 'Noeud 1-1', x: 0, y: 0, width: 120, height: 60 });
   d = addNode(d, { id: 'n2', label: 'Noeud 2-1', x: 150, y: 0, width: 120, height: 60 });
@@ -37,3 +37,20 @@ export const TwoNodeGroupDiagram = () => {
   d = addEdge(d, { id: 'e8', sourceId: 'n8', targetId: 'n10' });
   return { diagram: d, client: createMockClient(d) };
 }
+
+export const ThreeNodeGroupDiagram = () => {
+  let d = buildDiagram('Third Diagram');
+  d = addNode(d, { id: 'n1', label: 'Noeud 1-1', x: 0, y: 0, width: 120, height: 60 });
+  d = addNode(d, { id: 'n2', label: 'Noeud 1-2', x: 150, y: 0, width: 120, height: 60 });
+  d = addEdge(d, { id: 'e1', sourceId: 'n1', targetId: 'n2' });
+
+  d = addNode(d, { id: 'n3', label: 'Noeud 2-1', x: 0, y: 80, width: 120, height: 60 });
+  d = addNode(d, { id: 'n4', label: 'Noeud 2-2', x: 150, y: 80, width: 120, height: 60 });
+  d = addEdge(d, { id: 'e2', sourceId: 'n3', targetId: 'n4' });
+
+  d = addNode(d, { id: 'n5', label: 'Noeud 3-1', x: 0, y: 160, width: 120, height: 60 });
+  d = addNode(d, { id: 'n6', label: 'Noeud 3-2', x: 150, y: 160, width: 120, height: 60 });
+  d = addEdge(d, { id: 'e3', sourceId: 'n5', targetId: 'n6' });
+
+  return { diagram: d, client: createMockClient(d) };
+};

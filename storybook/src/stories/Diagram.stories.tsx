@@ -4,7 +4,7 @@ import { type ComponentProps, type MutableRefObject } from 'react';
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { fiveNodeDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
+import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
 type StoryCustomArgs = { autoLayout?: boolean; algorithm: string; directionL: string; directionT: string; nodeNode: number; nodeNodeBetweenLayers: number; componentComponent: number; edgeNodeBetweenLayers: number; iterations: number; maxIterations: number;};
@@ -13,6 +13,7 @@ type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCust
 const meta = {
   title: 'DiagramRepresentation',
   component: DiagramRepresentation,
+  tags: ['autodocs'],
   argTypes: {
     autoLayout: { control: 'boolean' },
     algorithm: { control: 'select', options: ['layered','rectpacking','stress','mrtree','radial','force','sporeOverlap','sporeCompaction'] },
@@ -29,7 +30,7 @@ const meta = {
 
 export default meta;
 
-const getElkLayeredOptions = (args: StoryCustomArgs): LayoutOptions => {
+const getElkOptions = (args: StoryCustomArgs): LayoutOptions => {
   const elkLayeredOptions : LayoutOptions = {
     'elk.algorithm': 'layered',
     'elk.layered.spacing.nodeNodeBetweenLayers': String(args.nodeNodeBetweenLayers),
@@ -119,15 +120,15 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
   render: (args) => (
       <DiagramStoryWrapper 
           args={args} 
-          diagramGenerator={fiveNodeDiagram} 
-          layoutOptions={getElkLayeredOptions(args)} 
+          diagramGenerator={FiveNodeDiagram} 
+          layoutOptions={getElkOptions(args)} 
       />
   )
 };
 
 export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   args:{
-    autoLayout: false,
+    autoLayout: true,
     algorithm: "layered",
     directionL: "DOWN",
     directionT: "DOWN",
@@ -142,7 +143,29 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={TwoNodeGroupDiagram} 
-          layoutOptions={getElkLayeredOptions(args)} 
+          layoutOptions={getElkOptions(args)} 
+      />
+  )
+};
+
+export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    algorithm: "layered",
+    directionL: "DOWN",
+    directionT: "DOWN",
+    nodeNode: 80,
+    nodeNodeBetweenLayers: 80,
+    componentComponent: 60,
+    edgeNodeBetweenLayers: 80,
+    iterations: 300,
+    maxIterations: 64,
+  },
+  render: (args) => (
+      <DiagramStoryWrapper
+          args={args}
+          diagramGenerator={ThreeNodeGroupDiagram}
+          layoutOptions={getElkOptions(args)}
       />
   )
 };
