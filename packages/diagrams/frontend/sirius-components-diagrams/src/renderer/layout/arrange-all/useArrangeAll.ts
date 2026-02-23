@@ -35,7 +35,7 @@ function reverseOrdreMap<K, V>(map: Map<K, V>): Map<K, V> {
 const getSubNodes = (nodes: Node<NodeData, string>[]): Map<string, Node<NodeData, string>[]> => {
   const subNodes: Map<string, Node<NodeData, string>[]> = new Map<string, Node<NodeData, string>[]>();
   for (const node of nodes.filter((n) => !n.hidden)) {
-    const parentNodeId: string = node.parentId ?? 'root';
+    const parentNodeId: string = node.data?.groupId || node.parentId || 'grp-1';
     if (!subNodes.has(parentNodeId)) {
       subNodes.set(parentNodeId, []);
     }
@@ -217,6 +217,40 @@ const elkOnSubNodes = async (
   }
   return layoutedAllNodes;
 };
+type Box = [number, number, number, number];
+const detectBox = (nodes: Node<any, string>[]): Box => {
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  nodes.forEach((node) => {
+    if (node && node.width && node.height) {
+      const nodeRight = node.position.x + node.width;
+      const nodeBottom = node.position.y + node.height;
+      if (node.position.x < minX) minX = node.position.x;
+      if (node.position.y < minY) minY = node.position.y;
+      if (nodeRight > maxX) maxX = nodeRight;
+      if (nodeBottom > maxY) maxY = nodeBottom;
+    }
+  });
+
+  return [minX, minY, maxX, maxY];
+};
+
+const overlapUnselected = (staticBox: Box, movingBox: Box, nodes) => {
+  const [sMinX, sMinY, sMaxX, sMaxY] = staticBox;
+  const [mMinX, mMinY, mMaxX, mMaxY] = movingBox;
+  const isOverlapping = sMinX < mMaxX && sMaxX > mMinX && sMinY < mMaxY && sMaxY > mMinY;
+  if (isOverlapping && sMinX != Infinity && mMinX != Infinity) {
+    const margin = 50;
+    const shiftX = sMaxX + margin - mMinX;
+    nodes.forEach((node) => {
+      node.position.x += shiftX;
+    });
+  }
+  return nodes;
+};
 
 export const doArrangeAll = async (
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>,
@@ -227,28 +261,82 @@ export const doArrangeAll = async (
   elk: any,
   layoutOptions: LayoutOptions
 ): Promise<RawDiagram> => {
-  const nodes: Node<NodeData, string>[] = [...getNodes()] as Node<NodeData, DiagramNodeType>[];
-  const subNodes: Map<string, Node<NodeData, string>[]> = reverseOrdreMap(getSubNodes(nodes));
-  const nodesAfterElk = await elkOnSubNodes(
-    reactFlowWrapper,
-    getEdges,
-    subNodes,
-    nodes,
-    layoutOptions,
-    zoom,
-    addErrorMessage,
-    elk
-  );
-  const laidOutNodesWithElk: Node<NodeData, string>[] = nodesAfterElk.reverse();
-  laidOutNodesWithElk.filter((laidOutNode) => {
-    const parentNode = nodesAfterElk.find((node) => node.id === laidOutNode.parentId);
-    return !parentNode || !isListData(parentNode);
-  });
+  const allNodes: Node<NodeData, string>[] = [...getNodes()] as Node<NodeData, DiagramNodeType>[];
+  const edges = getEdges();
 
-  const laidOutMovedNodeIds = laidOutNodesWithElk
+  const explicitSelection = allNodes.filter((n) => n.selected);
+  const notSelectedNodes = allNodes.filter((n) => !explicitSelection.some((sel) => sel.id === n.id));
+
+  let finalLaidOutNodes: Node<NodeData, string>[] = [];
+
+  if (explicitSelection.length > 0) {
+    //Sélection manuelle
+    const subNodes: Map<string, Node<NodeData, string>[]> = reverseOrdreMap(getSubNodes(explicitSelection));
+    const nodesAfterElk = await elkOnSubNodes(
+      reactFlowWrapper,
+      () => edges,
+      subNodes,
+      explicitSelection,
+      layoutOptions,
+      zoom,
+      addErrorMessage,
+      elk
+    );
+
+    const shiftedResult = overlapUnselected(
+      detectBox(notSelectedNodes),
+      detectBox(nodesAfterElk.slice().reverse()),
+      nodesAfterElk.reverse()
+    );
+
+    finalLaidOutNodes = allNodes.map((node) => {
+      const modifiedNode = shiftedResult.find((laidOutNode) => laidOutNode.id === node.id);
+      return modifiedNode ? modifiedNode : node;
+    });
+  } else {
+    //Automatique par Groupes
+    const groupsMap = new Map<string, Node<NodeData, string>[]>();
+    allNodes.forEach((n) => {
+      const gId = n.data?.groupId || 'grp-1';
+      if (!groupsMap.has(gId)) groupsMap.set(gId, []);
+      groupsMap.get(gId)!.push(n);
+    });
+
+    const groupsToProcess = Array.from(groupsMap.values());
+    let laidOutAccumulator: Node<NodeData, string>[] = [];
+
+    for (const currentGroupNodes of groupsToProcess) {
+      // On récupère l'option spécifique, sinon option globale
+      const currentOptions: LayoutOptions =
+        (currentGroupNodes[0]?.data?.groupOptions as LayoutOptions) || layoutOptions;
+
+      const subNodes: Map<string, Node<NodeData, string>[]> = reverseOrdreMap(getSubNodes(currentGroupNodes));
+      const nodesAfterElk = await elkOnSubNodes(
+        reactFlowWrapper,
+        () => edges,
+        subNodes,
+        currentGroupNodes,
+        currentOptions,
+        zoom,
+        addErrorMessage,
+        elk
+      );
+      if (laidOutAccumulator.length > 0) {
+        overlapUnselected(
+          detectBox(laidOutAccumulator),
+          detectBox(nodesAfterElk.slice().reverse()),
+          nodesAfterElk.reverse()
+        );
+      }
+      laidOutAccumulator.push(...nodesAfterElk);
+    }
+    finalLaidOutNodes = laidOutAccumulator;
+  }
+
+  const laidOutMovedNodeIds = finalLaidOutNodes
     .filter((node) => !node.data.isBorderNode && !node.data.pinned)
     .map((node) => node.id);
-  const edges = getEdges();
+
   edges
     .filter((edge) => laidOutMovedNodeIds.includes(edge.source) || laidOutMovedNodeIds.includes(edge.target))
     .forEach((edge: Edge<EdgeData, string>) => {
@@ -257,11 +345,7 @@ export const doArrangeAll = async (
       }
     });
 
-  const diagramToLayout: RawDiagram = {
-    nodes: laidOutNodesWithElk,
-    edges: edges,
-  };
-  return diagramToLayout;
+  return { nodes: finalLaidOutNodes, edges: edges };
 };
 
 export const useArrangeAll = (reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>): UseArrangeAllValue => {

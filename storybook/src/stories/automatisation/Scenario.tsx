@@ -29,7 +29,7 @@ export const TwoNodeGroupDiagram = () => {
   d = addNode(d, { id: 'n6', label: 'Noeud 4-1', x: 0, y: 200, width: 120, height: 60 });
   d = addNode(d, { id: 'n7', label: 'Noeud 5-1', x: 150, y: 200, width: 120, height: 60 });
   d = addNode(d, { id: 'n8', label: 'Noeud 5-2', x: 0, y: 280, width: 120, height: 60 });
-  d = addNode(d, { id: 'n9', label: 'Noeud 6-1', x: 300, y: 200, width: 120, height: 60 });
+  d = addNode(d, { id: 'n9', label: 'Noeud 6-1', x: 0, y: 360, width: 120, height: 60 });
   d = addNode(d, { id: 'n10', label: 'Noeud 6-2', x: 150, y: 280, width: 120, height: 60 });
   d = addEdge(d, { id: 'e5', sourceId: 'n6', targetId: 'n7' });
   d = addEdge(d, { id: 'e6', sourceId: 'n6', targetId: 'n8' });

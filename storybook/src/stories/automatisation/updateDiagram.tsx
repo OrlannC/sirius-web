@@ -23,24 +23,31 @@ const newDiagram = async (
     currentDiagram: any,
     options: LayoutOptions,
     reactFlowWrapper: MutableRefObject<HTMLDivElement | null>, 
-    resolveNodeOverlap: (nodes: any[], dir: 'horizontal' | 'vertical') => any[]
+    resolveNodeOverlap: (nodes: any[], dir: 'horizontal' | 'vertical') => any[],
+    selectedNodesIds: string[] = [],
+    nodeGroupsMap: Record<string, string> = {},
+    groupSpecificOptions:Record<string, string>
 ): Promise<GQLDiagram> => {
     const diagramCopy = JSON.parse(JSON.stringify(currentDiagram));
     const elk = new ELK();
-
+    //Transformation des données
     const inputNodes = diagramCopy.nodes.map((n: any) => ({
         id: n.id,
         position: n.position,
         width: n.size.width,
         height: n.size.height,
+        selected: selectedNodesIds.includes(n.id),
         data: { 
             ...n, 
-            insideLabel: n.insideLabel,
+            insideLabel: n.insideLabel, 
             isBorderNode: false, 
-            pinned: n.pinned 
+            pinned: n.pinned,
+            groupId: nodeGroupsMap[n.id] || 'grp-1',
+            groupOptions: groupSpecificOptions && groupSpecificOptions[nodeGroupsMap[n.id] || 'grp-1'] ? groupSpecificOptions[nodeGroupsMap[n.id] || 'grp-1'] : null
         },
         type: n.type,
-        parentId: n.parentNodeId 
+        parentId: n.parentNodeId,
+        groupId: nodeGroupsMap[n.id] || 'grp-1'
     }));
 
     const inputEdges = diagramCopy.edges.map((e: any) => ({
@@ -51,6 +58,7 @@ const newDiagram = async (
     }));
 
     try {
+        //Utilisation de useArrangeAll 
         const diagramResult: RawDiagram  = await doArrangeAll(
             reactFlowWrapper, 
             () => inputNodes, 
@@ -60,10 +68,17 @@ const newDiagram = async (
             elk, 
             options
         );
+        //Suppression des balises ELK fantômes
+        const hiddenContainer = document.getElementById('hidden-container');
+        if (hiddenContainer) {
+            hiddenContainer.remove();
+        }
+        //Utilisation de useOverlap 
         const layoutedNodes = resolveNodeOverlap(diagramResult.nodes,'horizontal');
         const layoutedEdges = diagramResult.edges;
+        //Réinsertion des nouvelles données calculée
         const nodeMap = new Map<string, any>(layoutedNodes.map((n: any) => [n.id, n]));
-        currentDiagram.nodes = currentDiagram.nodes.map((n: any) => {
+        diagramCopy.nodes = diagramCopy.nodes.map((n: any) => {
             const updated = nodeMap.get(n.id);
             if (updated) {
                 return {
@@ -74,7 +89,7 @@ const newDiagram = async (
             }
             return n;
         });
-        currentDiagram.layoutData.nodeLayoutData = currentDiagram.layoutData.nodeLayoutData.map((nodesD: any) => {
+        diagramCopy.layoutData.nodeLayoutData = diagramCopy.layoutData.nodeLayoutData.map((nodesD: any) => {
                 const updated = nodeMap.get(nodesD.id);
                 if (updated) {
                     return {
@@ -86,7 +101,7 @@ const newDiagram = async (
                 return nodesD;
         });
         const edgeMap = new Map<string, any>(layoutedEdges.map((e: any) => [e.id, e]));
-        currentDiagram.layoutData.edgeLayoutData = currentDiagram.layoutData.edgeLayoutData.map((edgesD: any) => {
+        diagramCopy.layoutData.edgeLayoutData = diagramCopy.layoutData.edgeLayoutData.map((edgesD: any) => {
                 const updatedEdge = edgeMap.get(edgesD.id);
                 
                 if (updatedEdge && updatedEdge.data && updatedEdge.data.bendingPoints && updatedEdge.data.bendingPoints.length > 0) {
@@ -97,10 +112,10 @@ const newDiagram = async (
                 }
                 return { ...edgesD, bendingPoints: [] };
         });
-        return currentDiagram ;
+        return diagramCopy ;
     } catch (e) {
         console.error("New Diagram Error", e);
-        return currentDiagram;
+        return diagramCopy;
     }
 };
 
@@ -116,27 +131,32 @@ export const DiagramStoryWrapper = ({ args, diagramGenerator, layoutOptions }: {
           diagramRef.current, 
           layoutOptions, 
           reactFlowWrapper, 
-          resolveNodeOverlap
+          resolveNodeOverlap,
+          args.selectedNodes,
+          args.nodeGroups,
+          args.groupSpecificOptions
       );
       diagramRef.current = updatedDiagram;
       setClient(createMockClient(updatedDiagram));
     };
 
     const optionsString = JSON.stringify(layoutOptions);
+    const selectedNodesString = JSON.stringify(args.selectedNodes);
+    const nodesGroupString = JSON.stringify(args.nodeGroups);
+    const groupSpecificOptions = JSON.stringify(args.groupSpecificOptions);
 
     useEffect(() => {
       if (args.autoLayout) {
         handleArrange();
       }
-    }, [args.autoLayout,optionsString]);
+    }, [args.autoLayout,optionsString, selectedNodesString,nodesGroupString,groupSpecificOptions]);
 
     return (
       <ApolloProvider client={client}>
         <I18nextProvider i18n={i18n}>
             <ServerContext.Provider value={{ httpOrigin: 'http://localhost' }}>
               <SelectionContextProvider initialSelection={{ entries: [] }}>
-                  <style>{`.react-flow { width: 100% !important; height: 100% !important;
-                        min-height: 600px !important; min-width: 1100px !important; }`}</style>
+                  <style>{`.react-flow { width: 100% !important; height: 100% !important; min-height: 600px !important; min-width: 1100px !important;}`}</style>
                   <div ref={reactFlowWrapper} style={{ width: '100%', height: '100%', position: 'relative' }}>
                     <DiagramRepresentation {...args} />
                   </div>

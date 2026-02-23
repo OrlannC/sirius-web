@@ -7,11 +7,11 @@ import { DiagramStoryWrapper } from './automatisation/updateDiagram';
 import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; algorithm: string; directionL: string; directionT: string; nodeNode: number; nodeNodeBetweenLayers: number; componentComponent: number; edgeNodeBetweenLayers: number; iterations: number; maxIterations: number;};
+type StoryCustomArgs = { autoLayout?: boolean; algorithm: string; directionL: string; directionT: string; nodeNode: number; nodeNodeBetweenLayers: number; componentComponent: number; edgeNodeBetweenLayers: number; iterations: number; maxIterations: number; selectedNodes: string[];};
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
-  title: 'DiagramRepresentation',
+  title: 'All Algorithm',
   component: DiagramRepresentation,
   tags: ['autodocs'],
   argTypes: {
@@ -25,6 +25,7 @@ const meta = {
     edgeNodeBetweenLayers: { if: { arg: 'algorithm', eq: 'layered' } },
     iterations: { if: { arg: 'algorithm', eq: 'force' } },
     maxIterations: { if: { arg: 'algorithm', eq: 'sporeOverlap' } },
+    selectedNodes: { control: 'object' },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -104,7 +105,7 @@ const getElkOptions = (args: StoryCustomArgs): LayoutOptions => {
   return getLayoutOptions(args.algorithm);
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     algorithm: "layered",
@@ -116,6 +117,7 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     edgeNodeBetweenLayers: 20,
     iterations: 300,
     maxIterations: 64,
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -138,6 +140,7 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     edgeNodeBetweenLayers: 80,
     iterations: 300,
     maxIterations: 64,
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n10'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -160,6 +163,7 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     edgeNodeBetweenLayers: 80,
     iterations: 300,
     maxIterations: 64,
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
   },
   render: (args) => (
       <DiagramStoryWrapper

@@ -7,7 +7,7 @@ import { DiagramStoryWrapper } from './automatisation/updateDiagram';
 import { FiveNodeDiagram, TwoNodeGroupDiagram, ThreeNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; direction: string; nodeNode: number; edgeNode: number; edgeRoutingMode: string; wheighting: string;};
+type StoryCustomArgs = { autoLayout?: boolean; direction: string; nodeNode: number; edgeNode: number; edgeRoutingMode: string; wheighting: string; selectedNodes: string[];};
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -21,6 +21,7 @@ const meta = {
     edgeNode: { },
     edgeRoutingMode: { control: 'select', options: ['AVOID_OVERLAP', 'MIDDLE_TO_MIDDLE', 'NONE'] },
     wheighting: { control: 'select', options: ['MODEL_ORDER', 'DESCENDANTS', 'FAN','CONSTRAINT'] },
+    selectedNodes: { control: 'object' },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -37,7 +38,7 @@ const getElkMrTreeOptions = (args: StoryCustomArgs): LayoutOptions => {
   };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     direction: "DOWN",
@@ -45,6 +46,7 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     edgeNode: 10,
     edgeRoutingMode: 'AVOID_OVERLAP',
     wheighting: 'MODEL_ORDER',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -63,6 +65,7 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     edgeNode: 10,
     edgeRoutingMode: 'AVOID_OVERLAP',
     wheighting: 'MODEL_ORDER',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n10'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -81,6 +84,7 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     edgeNode: 10,
     edgeRoutingMode: 'AVOID_OVERLAP',
     wheighting: 'MODEL_ORDER',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
   },
   render: (args) => (
       <DiagramStoryWrapper

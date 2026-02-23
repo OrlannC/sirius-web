@@ -7,7 +7,7 @@ import { DiagramStoryWrapper } from './automatisation/updateDiagram';
 import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; whiteSpaceStart: string; approStrat: string; targetWidth: number; contentAlign: string; approOptiGoal: string; };
+type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; whiteSpaceStart: string; approStrat: string; targetWidth: number; contentAlign: string; approOptiGoal: string; selectedNodes: string[];};
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -22,6 +22,7 @@ const meta = {
     targetWidth: { },
     contentAlign: { control: 'select', options: ['V_TOP H_LEFT', 'V_TOP H_CENTER', 'V_TOP H_RIGHT', 'V_CENTER H_LEFT', 'V_CENTER H_CENTER', 'V_CENTER H_RIGHT', 'V_BOTTOM H_LEFT', 'V_BOTTOM H_CENTER', 'V_BOTTOM H_RIGHT'] },
     approOptiGoal: { control: 'select', options: ['ASPECT_RATIO_DRIVEN', 'MAX_SCALE_DRIVEN', 'AREA_DRIVEN'] },
+    selectedNodes: { control: 'object' },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -40,7 +41,7 @@ const getElkRectPackingOptions = (args: StoryCustomArgs): LayoutOptions => {
   };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -49,6 +50,7 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     targetWidth: 1,
     contentAlign: 'V_TOP H_CENTER',
     approOptiGoal: 'MAX_SCALE_DRIVEN',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -68,6 +70,7 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     targetWidth: 1,
     contentAlign: 'V_TOP H_CENTER',
     approOptiGoal: 'MAX_SCALE_DRIVEN',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n10'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -87,6 +90,7 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     targetWidth: 1,
     contentAlign: 'V_TOP H_CENTER',
     approOptiGoal: 'MAX_SCALE_DRIVEN',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
   },
   render: (args) => (
       <DiagramStoryWrapper

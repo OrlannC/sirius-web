@@ -7,7 +7,7 @@ import { DiagramStoryWrapper } from './automatisation/updateDiagram';
 import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; spanningTree: string; treeConstrution: string; };
+type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; spanningTree: string; treeConstrution: string; selectedNodes: string[]; };
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -19,6 +19,7 @@ const meta = {
     nodeNode: {},
     spanningTree: { control: 'select', options: ['CENTER_DISTANCE', 'CIRCLE_UNDERLAP', 'RECTANGLE_UNDERLAP', 'INVERTED_OVERLAP', 'MINIMUM_ROOT_DISTANCE'] },
     treeConstrution: { control: 'select', options: ['MINIMUM_SPANNING_TREE', 'MAXIMUM_SPANNING_TREE'] },
+    selectedNodes: { control: 'object' },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -33,12 +34,13 @@ const getElkSporeCompactionOptions = (args: StoryCustomArgs): LayoutOptions => {
     };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
     spanningTree: 'CIRCLE_UNDERLAP ',
     treeConstrution: 'MINIMUM_SPANNING_TREE',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -55,6 +57,7 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     nodeNode: 80,
     spanningTree: 'CIRCLE_UNDERLAP ',
     treeConstrution: 'MINIMUM_SPANNING_TREE',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n10'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -71,6 +74,7 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     nodeNode: 80,
     spanningTree: 'CIRCLE_UNDERLAP ',
     treeConstrution: 'MINIMUM_SPANNING_TREE',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
   },
   render: (args) => (
       <DiagramStoryWrapper

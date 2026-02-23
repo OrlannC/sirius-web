@@ -7,7 +7,7 @@ import { DiagramStoryWrapper } from './automatisation/updateDiagram';
 import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; desiredEdgeLength: number; dimension: string; };
+type StoryCustomArgs = { autoLayout?: boolean; desiredEdgeLength: number; dimension: string; selectedNodes: string[]; };
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -18,6 +18,7 @@ const meta = {
     autoLayout: { control: 'boolean' },
     desiredEdgeLength: { },
     dimension: { control: 'select', options: ['XY', 'X', 'Y'] },
+    selectedNodes: { control: 'object' },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -31,11 +32,12 @@ const getElkStressOptions = (args: StoryCustomArgs): LayoutOptions => {
     };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     desiredEdgeLength: 100.0,
     dimension: 'XY',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -51,6 +53,7 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     autoLayout: true,
     desiredEdgeLength: 100.0,
     dimension: 'XY',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n10'],
   },
   render: (args) => (
       <DiagramStoryWrapper 
@@ -66,6 +69,7 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     autoLayout: true,
     desiredEdgeLength: 100.0,
     dimension: 'XY',
+    selectedNodes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
   },
   render: (args) => (
       <DiagramStoryWrapper
