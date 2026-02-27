@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { type ComponentProps, type MutableRefObject } from 'react';
-
+import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
+import { AllScenarioDiagram, BasiqueSiriusDiagram, FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
 type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; spanningTree: string; treeConstrution: string; };
@@ -25,27 +25,70 @@ const meta = {
 export default meta;
 
 const getElkSporeCompactionOptions = (args: StoryCustomArgs): LayoutOptions => {
-    return {
-      'elk.algorithm': 'sporeCompaction',
-      'elk.spacing.nodeNode': String(args.nodeNode),
-      'elk.processingOrder.spanningTreeCostFunction': args.spanningTree,
-      'elk.processingOrder.treeConstruction': args.treeConstrution,
-    };
+  return {
+    'elk.algorithm': 'sporeCompaction',
+    'elk.spacing.nodeNode': String(args.nodeNode),
+    'elk.processingOrder.spanningTreeCostFunction': args.spanningTree,
+    'elk.processingOrder.treeConstruction': args.treeConstrution,
+  };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+const listDiagram = AllScenarioDiagram();
+
+export const AllScenario: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
-    spanningTree: 'CIRCLE_UNDERLAP ',
+    spanningTree: 'CIRCLE_UNDERLAP',
     treeConstrution: 'MINIMUM_SPANNING_TREE',
   },
   render: (args) => (
+    <div className="conteneur">
+      {listDiagram.map((generator, index) => (
+          <DiagramStoryWrapper 
+            key={index}
+            args={args} 
+            diagramGenerator={generator} 
+            layoutOptions={getElkSporeCompactionOptions(args)}
+          />
+      ))}
+    </div>
+  )
+};
+
+export const Basique: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    spanningTree: 'CIRCLE_UNDERLAP',
+    treeConstrution: 'MINIMUM_SPANNING_TREE',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
+      <DiagramStoryWrapper 
+          args={args} 
+          diagramGenerator={BasiqueSiriusDiagram} 
+          layoutOptions={getElkSporeCompactionOptions(args)} 
+      />
+    </div>
+  )
+};
+
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    spanningTree: 'CIRCLE_UNDERLAP',
+    treeConstrution: 'MINIMUM_SPANNING_TREE',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={FiveNodeDiagram} 
           layoutOptions={getElkSporeCompactionOptions(args)} 
       />
+    </div>
   )
 };
 
@@ -53,15 +96,17 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
-    spanningTree: 'CIRCLE_UNDERLAP ',
+    spanningTree: 'CIRCLE_UNDERLAP',
     treeConstrution: 'MINIMUM_SPANNING_TREE',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={TwoNodeGroupDiagram} 
           layoutOptions={getElkSporeCompactionOptions(args)} 
       />
+    </div>
   )
 };
 
@@ -69,14 +114,16 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
-    spanningTree: 'CIRCLE_UNDERLAP ',
+    spanningTree: 'CIRCLE_UNDERLAP',
     treeConstrution: 'MINIMUM_SPANNING_TREE',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper
           args={args}
           diagramGenerator={ThreeNodeGroupDiagram}
           layoutOptions={getElkSporeCompactionOptions(args)}
       />
+    </div>
   )
 };

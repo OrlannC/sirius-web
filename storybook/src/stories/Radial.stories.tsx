@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { type ComponentProps, type MutableRefObject } from 'react';
-
+import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
+import { AllScenarioDiagram, BasiqueSiriusDiagram, FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
 type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; wedgeCrit: string; compactor: string; optiCrit: string;};
@@ -35,7 +35,9 @@ const getElkRadialOptions = (args: StoryCustomArgs): LayoutOptions => {
   };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+const listDiagram = AllScenarioDiagram();
+
+export const AllScenario: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -44,11 +46,54 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     optiCrit: 'NONE',
   },
   render: (args) => (
+    <div className="conteneur">
+      {listDiagram.map((generator, index) => (
+          <DiagramStoryWrapper 
+            key={index}
+            args={args} 
+            diagramGenerator={generator} 
+            layoutOptions={getElkRadialOptions(args)}
+          />
+      ))}
+    </div>
+  )
+};
+
+export const Basique: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    wedgeCrit: 'NODE_SIZE',
+    compactor: 'NONE',
+    optiCrit: 'NONE',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
+      <DiagramStoryWrapper 
+          args={args} 
+          diagramGenerator={BasiqueSiriusDiagram} 
+          layoutOptions={getElkRadialOptions(args)} 
+      />
+    </div>
+  )
+};
+
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    wedgeCrit: 'NODE_SIZE',
+    compactor: 'NONE',
+    optiCrit: 'NONE',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={FiveNodeDiagram} 
           layoutOptions={getElkRadialOptions(args)} 
       />
+    </div>
   )
 };
 
@@ -78,10 +123,12 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     optiCrit: 'NONE',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper
           args={args}
           diagramGenerator={ThreeNodeGroupDiagram}
           layoutOptions={getElkRadialOptions(args)}
       />
+    </div>
   )
 };

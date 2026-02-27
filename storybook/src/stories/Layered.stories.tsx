@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { type ComponentProps, type MutableRefObject } from 'react';
-
+import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { FiveNodeDiagram, TwoNodeGroupDiagram, ThreeNodeGroupDiagram } from './automatisation/Scenario';
+import { FiveNodeDiagram, TwoNodeGroupDiagram, ThreeNodeGroupDiagram, BasiqueSiriusDiagram, AllScenarioDiagram, TestDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
-type StoryCustomArgs = { autoLayout?: boolean; direction: string; nodeNode: number; nodeNodeBetweenLayers: number; componentComponent: number; edgeNodeBetweenLayers: number; layStrat: string; nodePlacStrat: string; contentAlign: string;};
+type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; direction: string; nodeNodeBetweenLayers: number; componentComponent: number; edgeNodeBetweenLayers: number; layStrat: string; nodePlacStrat: string; contentAlign: string;};
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
@@ -16,8 +16,8 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     autoLayout: { control: 'boolean' },
-    direction: { control: 'select', options: ['DOWN', 'RIGHT','LEFT','UP'] },
     nodeNode: { },
+    direction: { control: 'select', options: ['DOWN', 'RIGHT','LEFT','UP'] },
     nodeNodeBetweenLayers: { },
     componentComponent: { },
     edgeNodeBetweenLayers: { },
@@ -43,11 +43,13 @@ const getElkLayeredOptions = (args: StoryCustomArgs): LayoutOptions => {
     };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+const listDiagram = AllScenarioDiagram();
+
+export const AllScenario: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
-    direction: "DOWN",
     nodeNode: 80,
+    direction: "DOWN",
     nodeNodeBetweenLayers: 80,
     componentComponent: 60,
     edgeNodeBetweenLayers: 80,
@@ -56,19 +58,70 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     contentAlign: 'V_TOP H_CENTER',
   },
   render: (args) => (
+    <div className="conteneur">
+      {listDiagram.map((generator, index) => (
+          <DiagramStoryWrapper 
+            key={index}
+            args={args} 
+            diagramGenerator={generator} 
+            layoutOptions={getElkLayeredOptions(args)}
+          />
+      ))}
+    </div>
+  )
+};
+
+export const Basique: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    direction: "DOWN",
+    nodeNodeBetweenLayers: 80,
+    componentComponent: 60,
+    edgeNodeBetweenLayers: 80,
+    layStrat: 'NETWORK_SIMPLEX',
+    nodePlacStrat: 'NETWORK_SIMPLEX',
+    contentAlign: 'V_TOP H_CENTER',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
+      <DiagramStoryWrapper 
+          args={args} 
+          diagramGenerator={BasiqueSiriusDiagram} 
+          layoutOptions={getElkLayeredOptions(args)} 
+      />
+    </div>
+  )
+};
+
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    direction: "DOWN",
+    nodeNodeBetweenLayers: 80,
+    componentComponent: 60,
+    edgeNodeBetweenLayers: 80,
+    layStrat: 'NETWORK_SIMPLEX',
+    nodePlacStrat: 'NETWORK_SIMPLEX',
+    contentAlign: 'V_TOP H_CENTER',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={FiveNodeDiagram} 
           layoutOptions={getElkLayeredOptions(args)} 
       />
+    </div>
   )
 };
 
 export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
-    direction: "DOWN",
     nodeNode: 80,
+    direction: "DOWN",
     nodeNodeBetweenLayers: 80,
     componentComponent: 60,
     edgeNodeBetweenLayers: 80,
@@ -77,19 +130,21 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     contentAlign: 'V_TOP H_CENTER',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={TwoNodeGroupDiagram} 
           layoutOptions={getElkLayeredOptions(args)} 
       />
+    </div>
   )
 };
 
 export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
-    direction: "DOWN",
     nodeNode: 80,
+    direction: "DOWN",
     nodeNodeBetweenLayers: 80,
     componentComponent: 60,
     edgeNodeBetweenLayers: 80,
@@ -98,10 +153,35 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     contentAlign: 'V_TOP H_CENTER',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper
           args={args}
           diagramGenerator={ThreeNodeGroupDiagram}
           layoutOptions={getElkLayeredOptions(args)}
       />
+    </div>
+  )
+};
+
+export const Test: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    direction: "DOWN",
+    nodeNodeBetweenLayers: 80,
+    componentComponent: 60,
+    edgeNodeBetweenLayers: 80,
+    layStrat: 'NETWORK_SIMPLEX',
+    nodePlacStrat: 'NETWORK_SIMPLEX',
+    contentAlign: 'V_TOP H_CENTER',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
+      <DiagramStoryWrapper
+          args={args}
+          diagramGenerator={TestDiagram}
+          layoutOptions={getElkLayeredOptions(args)}
+      />
+    </div>
   )
 };

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { type ComponentProps, type MutableRefObject } from 'react';
-
+import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
+import { AllScenarioDiagram, BasiqueSiriusDiagram, FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram } from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
 type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; whiteSpaceStart: string; approStrat: string; targetWidth: number; contentAlign: string; approOptiGoal: string; };
@@ -40,7 +40,9 @@ const getElkRectPackingOptions = (args: StoryCustomArgs): LayoutOptions => {
   };
 };
 
-export const fiveNode: StoryObj<DiagramStoryArgs> = {
+const listDiagram = AllScenarioDiagram();
+
+export const AllScenario: StoryObj<DiagramStoryArgs> = {
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -51,11 +53,58 @@ export const fiveNode: StoryObj<DiagramStoryArgs> = {
     approOptiGoal: 'MAX_SCALE_DRIVEN',
   },
   render: (args) => (
+    <div className="conteneur">
+      {listDiagram.map((generator, index) => (
+          <DiagramStoryWrapper 
+            key={index}
+            args={args} 
+            diagramGenerator={generator} 
+            layoutOptions={getElkRectPackingOptions(args)}
+          />
+      ))}
+    </div>
+  )
+};
+
+export const Basique: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    whiteSpaceStart: 'NONE',
+    approStrat: 'GREEDY',
+    targetWidth: 1,
+    contentAlign: 'V_TOP H_CENTER',
+    approOptiGoal: 'MAX_SCALE_DRIVEN',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
+      <DiagramStoryWrapper 
+          args={args} 
+          diagramGenerator={BasiqueSiriusDiagram} 
+          layoutOptions={getElkRectPackingOptions(args)} 
+      />
+    </div>
+  )
+};
+
+export const FiveNode: StoryObj<DiagramStoryArgs> = {
+  args:{
+    autoLayout: true,
+    nodeNode: 80,
+    whiteSpaceStart: 'NONE',
+    approStrat: 'GREEDY',
+    targetWidth: 1,
+    contentAlign: 'V_TOP H_CENTER',
+    approOptiGoal: 'MAX_SCALE_DRIVEN',
+  },
+  render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={FiveNodeDiagram} 
           layoutOptions={getElkRectPackingOptions(args)} 
       />
+    </div>
   )
 };
 
@@ -70,11 +119,13 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
     approOptiGoal: 'MAX_SCALE_DRIVEN',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper 
           args={args} 
           diagramGenerator={TwoNodeGroupDiagram} 
           layoutOptions={getElkRectPackingOptions(args)} 
       />
+    </div>
   )
 };
 
@@ -89,10 +140,12 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
     approOptiGoal: 'MAX_SCALE_DRIVEN',
   },
   render: (args) => (
+    <div style={{width: '100vw', height: '100vh'}}>
       <DiagramStoryWrapper
           args={args}
           diagramGenerator={ThreeNodeGroupDiagram}
           layoutOptions={getElkRectPackingOptions(args)}
       />
+    </div>
   )
 };
