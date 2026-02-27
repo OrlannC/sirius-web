@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Obeo.
+ * Copyright (c) 2023, 2026 Obeo.
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -110,6 +110,14 @@ public interface DiagramPackage extends EPackage {
     int DIAGRAM_DESCRIPTION__ICON_EXPRESSION = ViewPackage.REPRESENTATION_DESCRIPTION__ICON_EXPRESSION;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_DESCRIPTION__DESCRIPTION = ViewPackage.REPRESENTATION_DESCRIPTION__DESCRIPTION;
+
+    /**
      * The feature id for the '<em><b>Auto Layout</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
      * @generated
@@ -118,13 +126,22 @@ public interface DiagramPackage extends EPackage {
     int DIAGRAM_DESCRIPTION__AUTO_LAYOUT = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Toolbar</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_DESCRIPTION__TOOLBAR = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Palette</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
      *
      * @generated
      * @ordered
      */
-    int DIAGRAM_DESCRIPTION__PALETTE = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 1;
+    int DIAGRAM_DESCRIPTION__PALETTE = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Group Palette</b></em>' containment reference. <!-- begin-user-doc --> <!--
@@ -133,7 +150,7 @@ public interface DiagramPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DIAGRAM_DESCRIPTION__GROUP_PALETTE = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 2;
+    int DIAGRAM_DESCRIPTION__GROUP_PALETTE = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Node Descriptions</b></em>' containment reference list. <!-- begin-user-doc -->
@@ -142,7 +159,7 @@ public interface DiagramPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DIAGRAM_DESCRIPTION__NODE_DESCRIPTIONS = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 3;
+    int DIAGRAM_DESCRIPTION__NODE_DESCRIPTIONS = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Edge Descriptions</b></em>' containment reference list. <!-- begin-user-doc -->
@@ -151,7 +168,7 @@ public interface DiagramPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DIAGRAM_DESCRIPTION__EDGE_DESCRIPTIONS = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 4;
+    int DIAGRAM_DESCRIPTION__EDGE_DESCRIPTIONS = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Arrange Layout Direction</b></em>' attribute. <!-- begin-user-doc --> <!--
@@ -160,7 +177,7 @@ public interface DiagramPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DIAGRAM_DESCRIPTION__ARRANGE_LAYOUT_DIRECTION = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 5;
+    int DIAGRAM_DESCRIPTION__ARRANGE_LAYOUT_DIRECTION = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 6;
 
     /**
      * The number of structural features of the '<em>Description</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -169,7 +186,7 @@ public interface DiagramPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DIAGRAM_DESCRIPTION_FEATURE_COUNT = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 6;
+    int DIAGRAM_DESCRIPTION_FEATURE_COUNT = ViewPackage.REPRESENTATION_DESCRIPTION_FEATURE_COUNT + 7;
 
     /**
      * The number of operations of the '<em>Description</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -233,13 +250,21 @@ public interface DiagramPackage extends EPackage {
     int DIAGRAM_ELEMENT_DESCRIPTION__SYNCHRONIZATION_POLICY = 4;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_ELEMENT_DESCRIPTION__DESCRIPTION = 5;
+
+    /**
      * The number of structural features of the '<em>Element Description</em>' class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      *
      * @generated
      * @ordered
      */
-    int DIAGRAM_ELEMENT_DESCRIPTION_FEATURE_COUNT = 5;
+    int DIAGRAM_ELEMENT_DESCRIPTION_FEATURE_COUNT = 6;
 
     /**
      * The number of operations of the '<em>Element Description</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -302,6 +327,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int NODE_DESCRIPTION__SYNCHRONIZATION_POLICY = DIAGRAM_ELEMENT_DESCRIPTION__SYNCHRONIZATION_POLICY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int NODE_DESCRIPTION__DESCRIPTION = DIAGRAM_ELEMENT_DESCRIPTION__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Collapsible</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -532,6 +565,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int EDGE_DESCRIPTION__SYNCHRONIZATION_POLICY = DIAGRAM_ELEMENT_DESCRIPTION__SYNCHRONIZATION_POLICY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int EDGE_DESCRIPTION__DESCRIPTION = DIAGRAM_ELEMENT_DESCRIPTION__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Begin Label Expression</b></em>' attribute. <!-- begin-user-doc --> <!--
@@ -1684,13 +1725,21 @@ public interface DiagramPackage extends EPackage {
     int NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY = BORDER_STYLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int NODE_STYLE_DESCRIPTION__DESCRIPTION = BORDER_STYLE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Node Style Description</em>' class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      *
      * @generated
      * @ordered
      */
-    int NODE_STYLE_DESCRIPTION_FEATURE_COUNT = BORDER_STYLE_FEATURE_COUNT + 1;
+    int NODE_STYLE_DESCRIPTION_FEATURE_COUNT = BORDER_STYLE_FEATURE_COUNT + 2;
 
     /**
      * The number of operations of the '<em>Node Style Description</em>' class. <!-- begin-user-doc --> <!--
@@ -1881,6 +1930,14 @@ public interface DiagramPackage extends EPackage {
     int RECTANGULAR_NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY = NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int RECTANGULAR_NODE_STYLE_DESCRIPTION__DESCRIPTION = NODE_STYLE_DESCRIPTION__DESCRIPTION;
+
+    /**
      * The feature id for the '<em><b>Background</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
      * @generated
@@ -1947,6 +2004,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int IMAGE_NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY = NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int IMAGE_NODE_STYLE_DESCRIPTION__DESCRIPTION = NODE_STYLE_DESCRIPTION__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Shape</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2024,6 +2089,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int ICON_LABEL_NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY = NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int ICON_LABEL_NODE_STYLE_DESCRIPTION__DESCRIPTION = NODE_STYLE_DESCRIPTION__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Background</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2250,13 +2323,21 @@ public interface DiagramPackage extends EPackage {
     int EDGE_STYLE__EDGE_TYPE = STYLE_FEATURE_COUNT + 17;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int EDGE_STYLE__DESCRIPTION = STYLE_FEATURE_COUNT + 18;
+
+    /**
      * The number of structural features of the '<em>Edge Style</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
      *
      * @generated
      * @ordered
      */
-    int EDGE_STYLE_FEATURE_COUNT = STYLE_FEATURE_COUNT + 18;
+    int EDGE_STYLE_FEATURE_COUNT = STYLE_FEATURE_COUNT + 19;
 
     /**
      * The number of operations of the '<em>Edge Style</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2441,13 +2522,21 @@ public interface DiagramPackage extends EPackage {
     int CONDITIONAL_EDGE_STYLE__EDGE_TYPE = ViewPackage.CONDITIONAL_FEATURE_COUNT + 18;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_EDGE_STYLE__DESCRIPTION = ViewPackage.CONDITIONAL_FEATURE_COUNT + 19;
+
+    /**
      * The number of structural features of the '<em>Conditional Edge Style</em>' class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      *
      * @generated
      * @ordered
      */
-    int CONDITIONAL_EDGE_STYLE_FEATURE_COUNT = ViewPackage.CONDITIONAL_FEATURE_COUNT + 19;
+    int CONDITIONAL_EDGE_STYLE_FEATURE_COUNT = ViewPackage.CONDITIONAL_FEATURE_COUNT + 20;
 
     /**
      * The number of operations of the '<em>Conditional Edge Style</em>' class. <!-- begin-user-doc --> <!--
@@ -2818,12 +2907,20 @@ public interface DiagramPackage extends EPackage {
     int TOOL__BODY = 2;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int TOOL__DESCRIPTION = 3;
+
+    /**
      * The number of structural features of the '<em>Tool</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
      * @generated
      * @ordered
      */
-    int TOOL_FEATURE_COUNT = 3;
+    int TOOL_FEATURE_COUNT = 4;
 
     /**
      * The number of operations of the '<em>Tool</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2868,6 +2965,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int DELETE_TOOL__BODY = TOOL__BODY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DELETE_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
 
     /**
      * The number of structural features of the '<em>Delete Tool</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -2923,6 +3028,14 @@ public interface DiagramPackage extends EPackage {
     int DROP_TOOL__BODY = TOOL__BODY;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DROP_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
+
+    /**
      * The number of structural features of the '<em>Drop Tool</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
      *
@@ -2974,6 +3087,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int EDGE_TOOL__BODY = TOOL__BODY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int EDGE_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Target Element Descriptions</b></em>' reference list. <!-- begin-user-doc --> <!--
@@ -3065,6 +3186,14 @@ public interface DiagramPackage extends EPackage {
     int EDGE_RECONNECTION_TOOL__BODY = TOOL__BODY;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int EDGE_RECONNECTION_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
+
+    /**
      * The number of structural features of the '<em>Edge Reconnection Tool</em>' class. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      *
@@ -3117,6 +3246,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int LABEL_EDIT_TOOL__BODY = TOOL__BODY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int LABEL_EDIT_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Initial Direct Edit Label Expression</b></em>' attribute. <!-- begin-user-doc -->
@@ -3179,6 +3316,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int NODE_TOOL__BODY = TOOL__BODY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int NODE_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
 
     int NODE_TOOL__DIALOG_DESCRIPTION = TOOL_FEATURE_COUNT;
 
@@ -3253,6 +3398,14 @@ public interface DiagramPackage extends EPackage {
     int SOURCE_EDGE_END_RECONNECTION_TOOL__BODY = EDGE_RECONNECTION_TOOL__BODY;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int SOURCE_EDGE_END_RECONNECTION_TOOL__DESCRIPTION = EDGE_RECONNECTION_TOOL__DESCRIPTION;
+
+    /**
      * The number of structural features of the '<em>Source Edge End Reconnection Tool</em>' class. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      *
@@ -3295,6 +3448,14 @@ public interface DiagramPackage extends EPackage {
      * @ordered
      */
     int TARGET_EDGE_END_RECONNECTION_TOOL__BODY = EDGE_RECONNECTION_TOOL__BODY;
+
+    /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int TARGET_EDGE_END_RECONNECTION_TOOL__DESCRIPTION = EDGE_RECONNECTION_TOOL__DESCRIPTION;
 
     /**
      * The number of structural features of the '<em>Target Edge End Reconnection Tool</em>' class. <!-- begin-user-doc
@@ -3525,13 +3686,30 @@ public interface DiagramPackage extends EPackage {
     int SELECTION_DIALOG_DESCRIPTION__MULTIPLE = DIALOG_DESCRIPTION_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Optional</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int SELECTION_DIALOG_DESCRIPTION__OPTIONAL = DIALOG_DESCRIPTION_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>No Selection Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
+     *
+     * @generated
+     * @ordered
+     */
+    int SELECTION_DIALOG_DESCRIPTION__NO_SELECTION_LABEL = DIALOG_DESCRIPTION_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Selection Dialog Description</em>' class. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      *
      * @generated
      * @ordered
      */
-    int SELECTION_DIALOG_DESCRIPTION_FEATURE_COUNT = DIALOG_DESCRIPTION_FEATURE_COUNT + 3;
+    int SELECTION_DIALOG_DESCRIPTION_FEATURE_COUNT = DIALOG_DESCRIPTION_FEATURE_COUNT + 5;
 
     /**
      * The number of operations of the '<em>Selection Dialog Description</em>' class. <!-- begin-user-doc --> <!--
@@ -3755,6 +3933,14 @@ public interface DiagramPackage extends EPackage {
     int DROP_NODE_TOOL__BODY = TOOL__BODY;
 
     /**
+     * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DROP_NODE_TOOL__DESCRIPTION = TOOL__DESCRIPTION;
+
+    /**
      * The feature id for the '<em><b>Accepted Node Types</b></em>' reference list. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      *
@@ -3914,6 +4100,50 @@ public interface DiagramPackage extends EPackage {
     int ACTION_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.impl.DiagramToolbarImpl
+     * <em>Toolbar</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @see org.eclipse.sirius.components.view.diagram.impl.DiagramToolbarImpl
+     * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getDiagramToolbar()
+     * @generated
+     */
+    int DIAGRAM_TOOLBAR = 48;
+
+    /**
+     * The feature id for the '<em><b>Precondition Expression</b></em>' attribute. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_TOOLBAR__PRECONDITION_EXPRESSION = 0;
+
+    /**
+     * The feature id for the '<em><b>Expanded By Default</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_TOOLBAR__EXPANDED_BY_DEFAULT = 1;
+
+    /**
+     * The number of structural features of the '<em>Toolbar</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_TOOLBAR_FEATURE_COUNT = 2;
+
+    /**
+     * The number of operations of the '<em>Toolbar</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_TOOLBAR_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.ArrowStyle <em>Arrow Style</em>}'
      * enum. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
@@ -3921,7 +4151,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getArrowStyle()
      * @generated
      */
-    int ARROW_STYLE = 48;
+    int ARROW_STYLE = 49;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.LayoutDirection <em>Layout
@@ -3931,7 +4161,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getLayoutDirection()
      * @generated
      */
-    int LAYOUT_DIRECTION = 49;
+    int LAYOUT_DIRECTION = 50;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.LineStyle <em>Line Style</em>}'
@@ -3941,7 +4171,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getLineStyle()
      * @generated
      */
-    int LINE_STYLE = 50;
+    int LINE_STYLE = 51;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.NodeContainmentKind <em>Node
@@ -3951,7 +4181,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getNodeContainmentKind()
      * @generated
      */
-    int NODE_CONTAINMENT_KIND = 51;
+    int NODE_CONTAINMENT_KIND = 52;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.SynchronizationPolicy
@@ -3961,7 +4191,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getSynchronizationPolicy()
      * @generated
      */
-    int SYNCHRONIZATION_POLICY = 52;
+    int SYNCHRONIZATION_POLICY = 53;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.InsideLabelPosition <em>Inside
@@ -3971,7 +4201,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getInsideLabelPosition()
      * @generated
      */
-    int INSIDE_LABEL_POSITION = 53;
+    int INSIDE_LABEL_POSITION = 54;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.OutsideLabelPosition <em>Outside
@@ -3981,7 +4211,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getOutsideLabelPosition()
      * @generated
      */
-    int OUTSIDE_LABEL_POSITION = 54;
+    int OUTSIDE_LABEL_POSITION = 55;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.LabelOverflowStrategy <em>Label
@@ -3991,7 +4221,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getLabelOverflowStrategy()
      * @generated
      */
-    int LABEL_OVERFLOW_STRATEGY = 55;
+    int LABEL_OVERFLOW_STRATEGY = 56;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.ArrangeLayoutDirection <em>Arrange
@@ -4001,7 +4231,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getArrangeLayoutDirection()
      * @generated
      */
-    int ARRANGE_LAYOUT_DIRECTION = 56;
+    int ARRANGE_LAYOUT_DIRECTION = 57;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.LabelTextAlign <em>Label Text
@@ -4011,7 +4241,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getLabelTextAlign()
      * @generated
      */
-    int LABEL_TEXT_ALIGN = 57;
+    int LABEL_TEXT_ALIGN = 58;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.UserResizableDirection <em>User
@@ -4021,7 +4251,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getUserResizableDirection()
      * @generated
      */
-    int USER_RESIZABLE_DIRECTION = 58;
+    int USER_RESIZABLE_DIRECTION = 59;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.HeaderSeparatorDisplayMode
@@ -4031,7 +4261,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getHeaderSeparatorDisplayMode()
      * @generated
      */
-    int HEADER_SEPARATOR_DISPLAY_MODE = 59;
+    int HEADER_SEPARATOR_DISPLAY_MODE = 60;
 
     /**
      * The meta object id for the '{@link org.eclipse.sirius.components.view.diagram.EdgeType <em>Edge Type</em>}' enum.
@@ -4041,7 +4271,7 @@ public interface DiagramPackage extends EPackage {
      * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getEdgeType()
      * @generated
      */
-    int EDGE_TYPE = 60;
+    int EDGE_TYPE = 61;
 
     /**
      * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.DiagramDescription
@@ -4065,6 +4295,18 @@ public interface DiagramPackage extends EPackage {
      * @see #getDiagramDescription()
      */
     EAttribute getDiagramDescription_AutoLayout();
+
+    /**
+     * Returns the meta object for the reference
+     * '{@link org.eclipse.sirius.components.view.diagram.DiagramDescription#getToolbar <em>Toolbar</em>}'. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the reference '<em>Toolbar</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.DiagramDescription#getToolbar()
+     * @see #getDiagramDescription()
+     * @generated
+     */
+    EReference getDiagramDescription_Toolbar();
 
     /**
      * Returns the meta object for the containment reference
@@ -4197,6 +4439,18 @@ public interface DiagramPackage extends EPackage {
      * @generated
      */
     EAttribute getDiagramElementDescription_SynchronizationPolicy();
+
+    /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.DiagramElementDescription#getDescription
+     * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Description</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.DiagramElementDescription#getDescription()
+     * @see #getDiagramElementDescription()
+     * @generated
+     */
+    EAttribute getDiagramElementDescription_Description();
 
     /**
      * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.NodeDescription <em>Node
@@ -5065,6 +5319,18 @@ public interface DiagramPackage extends EPackage {
     EReference getNodeStyleDescription_ChildrenLayoutStrategy();
 
     /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.NodeStyleDescription#getDescription <em>Description</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Description</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.NodeStyleDescription#getDescription()
+     * @see #getNodeStyleDescription()
+     * @generated
+     */
+    EAttribute getNodeStyleDescription_Description();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.ConditionalNodeStyle
      * <em>Conditional Node Style</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
@@ -5334,6 +5600,18 @@ public interface DiagramPackage extends EPackage {
      * @generated
      */
     EAttribute getEdgeStyle_EdgeType();
+
+    /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.EdgeStyle#getDescription <em>Description</em>}'. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Description</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.EdgeStyle#getDescription()
+     * @see #getEdgeStyle()
+     * @generated
+     */
+    EAttribute getEdgeStyle_Description();
 
     /**
      * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.ConditionalEdgeStyle
@@ -5734,6 +6012,17 @@ public interface DiagramPackage extends EPackage {
     EReference getTool_Body();
 
     /**
+     * Returns the meta object for the attribute '{@link org.eclipse.sirius.components.view.diagram.Tool#getDescription
+     * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Description</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.Tool#getDescription()
+     * @see #getTool()
+     * @generated
+     */
+    EAttribute getTool_Description();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.DeleteTool <em>Delete
      * Tool</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
@@ -6064,6 +6353,30 @@ public interface DiagramPackage extends EPackage {
     EAttribute getSelectionDialogDescription_Multiple();
 
     /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.SelectionDialogDescription#isOptional <em>Optional</em>}'.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Optional</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.SelectionDialogDescription#isOptional()
+     * @see #getSelectionDialogDescription()
+     * @generated
+     */
+    EAttribute getSelectionDialogDescription_Optional();
+
+    /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.SelectionDialogDescription#getNoSelectionLabel <em>No
+     * Selection Label</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>No Selection Label</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.SelectionDialogDescription#getNoSelectionLabel()
+     * @see #getSelectionDialogDescription()
+     * @generated
+     */
+    EAttribute getSelectionDialogDescription_NoSelectionLabel();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.ToolSection <em>Tool
      * Section</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
@@ -6315,6 +6628,40 @@ public interface DiagramPackage extends EPackage {
     EReference getAction_Body();
 
     /**
+     * Returns the meta object for class '{@link org.eclipse.sirius.components.view.diagram.DiagramToolbar
+     * <em>Toolbar</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for class '<em>Toolbar</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.DiagramToolbar
+     * @generated
+     */
+    EClass getDiagramToolbar();
+
+    /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.DiagramToolbar#getPreconditionExpression <em>Precondition
+     * Expression</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Precondition Expression</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.DiagramToolbar#getPreconditionExpression()
+     * @see #getDiagramToolbar()
+     * @generated
+     */
+    EAttribute getDiagramToolbar_PreconditionExpression();
+
+    /**
+     * Returns the meta object for the attribute
+     * '{@link org.eclipse.sirius.components.view.diagram.DiagramToolbar#isExpandedByDefault <em>Expanded By
+     * Default</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+     *
+     * @return the meta object for the attribute '<em>Expanded By Default</em>'.
+     * @see org.eclipse.sirius.components.view.diagram.DiagramToolbar#isExpandedByDefault()
+     * @see #getDiagramToolbar()
+     * @generated
+     */
+    EAttribute getDiagramToolbar_ExpandedByDefault();
+
+    /**
      * Returns the meta object for enum '{@link org.eclipse.sirius.components.view.diagram.ArrowStyle <em>Arrow
      * Style</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
      *
@@ -6487,6 +6834,14 @@ public interface DiagramPackage extends EPackage {
         EAttribute DIAGRAM_DESCRIPTION__AUTO_LAYOUT = eINSTANCE.getDiagramDescription_AutoLayout();
 
         /**
+         * The meta object literal for the '<em><b>Toolbar</b></em>' containment reference feature. <!-- begin-user-doc
+         * --> <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        EReference DIAGRAM_DESCRIPTION__TOOLBAR = eINSTANCE.getDiagramDescription_Toolbar();
+
+        /**
          * The meta object literal for the '<em><b>Palette</b></em>' containment reference feature. <!-- begin-user-doc
          * --> <!-- end-user-doc -->
          *
@@ -6576,6 +6931,14 @@ public interface DiagramPackage extends EPackage {
          * @generated
          */
         EAttribute DIAGRAM_ELEMENT_DESCRIPTION__SYNCHRONIZATION_POLICY = eINSTANCE.getDiagramElementDescription_SynchronizationPolicy();
+
+        /**
+         * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+         * end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute DIAGRAM_ELEMENT_DESCRIPTION__DESCRIPTION = eINSTANCE.getDiagramElementDescription_Description();
 
         /**
          * The meta object literal for the '{@link org.eclipse.sirius.components.view.diagram.impl.NodeDescriptionImpl
@@ -7194,6 +7557,14 @@ public interface DiagramPackage extends EPackage {
         EReference NODE_STYLE_DESCRIPTION__CHILDREN_LAYOUT_STRATEGY = eINSTANCE.getNodeStyleDescription_ChildrenLayoutStrategy();
 
         /**
+         * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+         * end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute NODE_STYLE_DESCRIPTION__DESCRIPTION = eINSTANCE.getNodeStyleDescription_Description();
+
+        /**
          * The meta object literal for the
          * '{@link org.eclipse.sirius.components.view.diagram.impl.ConditionalNodeStyleImpl <em>Conditional Node
          * Style</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -7396,6 +7767,14 @@ public interface DiagramPackage extends EPackage {
          * @generated
          */
         EAttribute EDGE_STYLE__EDGE_TYPE = eINSTANCE.getEdgeStyle_EdgeType();
+
+        /**
+         * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+         * end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute EDGE_STYLE__DESCRIPTION = eINSTANCE.getEdgeStyle_Description();
 
         /**
          * The meta object literal for the
@@ -7675,6 +8054,14 @@ public interface DiagramPackage extends EPackage {
         EReference TOOL__BODY = eINSTANCE.getTool_Body();
 
         /**
+         * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+         * end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute TOOL__DESCRIPTION = eINSTANCE.getTool_Description();
+
+        /**
          * The meta object literal for the '{@link org.eclipse.sirius.components.view.diagram.impl.DeleteToolImpl
          * <em>Delete Tool</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
          *
@@ -7933,6 +8320,22 @@ public interface DiagramPackage extends EPackage {
         EAttribute SELECTION_DIALOG_DESCRIPTION__MULTIPLE = eINSTANCE.getSelectionDialogDescription_Multiple();
 
         /**
+         * The meta object literal for the '<em><b>Optional</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+         * end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute SELECTION_DIALOG_DESCRIPTION__OPTIONAL = eINSTANCE.getSelectionDialogDescription_Optional();
+
+        /**
+         * The meta object literal for the '<em><b>No Selection Label</b></em>' attribute feature. <!-- begin-user-doc
+         * --> <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute SELECTION_DIALOG_DESCRIPTION__NO_SELECTION_LABEL = eINSTANCE.getSelectionDialogDescription_NoSelectionLabel();
+
+        /**
          * The meta object literal for the '{@link org.eclipse.sirius.components.view.diagram.impl.ToolSectionImpl
          * <em>Tool Section</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
          *
@@ -8125,6 +8528,32 @@ public interface DiagramPackage extends EPackage {
          * @generated
          */
         EReference ACTION__BODY = eINSTANCE.getAction_Body();
+
+        /**
+         * The meta object literal for the '{@link org.eclipse.sirius.components.view.diagram.impl.DiagramToolbarImpl
+         * <em>Toolbar</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+         *
+         * @see org.eclipse.sirius.components.view.diagram.impl.DiagramToolbarImpl
+         * @see org.eclipse.sirius.components.view.diagram.impl.DiagramPackageImpl#getDiagramToolbar()
+         * @generated
+         */
+        EClass DIAGRAM_TOOLBAR = eINSTANCE.getDiagramToolbar();
+
+        /**
+         * The meta object literal for the '<em><b>Precondition Expression</b></em>' attribute feature. <!--
+         * begin-user-doc --> <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute DIAGRAM_TOOLBAR__PRECONDITION_EXPRESSION = eINSTANCE.getDiagramToolbar_PreconditionExpression();
+
+        /**
+         * The meta object literal for the '<em><b>Expanded By Default</b></em>' attribute feature. <!-- begin-user-doc
+         * --> <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        EAttribute DIAGRAM_TOOLBAR__EXPANDED_BY_DEFAULT = eINSTANCE.getDiagramToolbar_ExpandedByDefault();
 
         /**
          * The meta object literal for the '{@link org.eclipse.sirius.components.view.diagram.ArrowStyle <em>Arrow

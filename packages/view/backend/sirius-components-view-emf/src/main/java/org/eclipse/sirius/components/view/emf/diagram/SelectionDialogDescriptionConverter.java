@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Obeo.
+ * Copyright (c) 2024, 2026 Obeo.
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -117,11 +117,18 @@ public class SelectionDialogDescriptionConverter implements IDialogDescriptionCo
         TreeDescription treeDescription = this.createTreeDescription(selectionDescription, interpreter);
         return SelectionDescription.newSelectionDescription(selectionDescriptionId)
                 .messageProvider(variableManager -> {
-                    String message = selectionDescription.getSelectionMessage();
-                    if (message == null) {
-                        message = "";
+                    String message = Optional.ofNullable(selectionDescription.getSelectionMessage()).orElse("");
+                    if (message.isBlank()) {
+                        message = "Use an existing element";
                     }
                     return message;
+                })
+                .noSelectionLabelProvider(variableManager -> {
+                    String noSelectionLabel = Optional.ofNullable(selectionDescription.getNoSelectionLabel()).orElse("");
+                    if (noSelectionLabel.isBlank()) {
+                        noSelectionLabel = "Confirm without selection";
+                    }
+                    return noSelectionLabel;
                 })
                 .idProvider(variableManager -> SELECTION_PREFIX)
                 .labelProvider(variableManager -> variableManager.get(VariableManager.SELF, Object.class)
@@ -135,6 +142,7 @@ public class SelectionDialogDescriptionConverter implements IDialogDescriptionCo
                 .canCreatePredicate(variableManager -> false)
                 .treeDescription(treeDescription)
                 .multiple(selectionDescription.isMultiple())
+                .optional(selectionDescription.isOptional())
                 .iconURLsProvider(variableManager -> List.of())
                 .build();
     }

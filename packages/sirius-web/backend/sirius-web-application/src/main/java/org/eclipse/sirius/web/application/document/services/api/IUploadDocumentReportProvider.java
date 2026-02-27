@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Obeo.
+ * Copyright (c) 2024, 2026 Obeo.
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.sirius.web.application.document.services.api;
 
-import org.eclipse.emf.ecore.resource.Resource;
-
 /**
  * Use to provide report when uploading a document into Sirius Web.
  *
@@ -21,8 +19,8 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface IUploadDocumentReportProvider {
 
-    boolean canHandle(Resource resource);
+    boolean canHandle(UploadedResource uploadedResource);
 
-    String createReport(Resource resource);
+    String createReport(UploadedResource uploadedResource);
 
 }

@@ -1,6 +1,6 @@
 {
   "name": "@eclipse-sirius/sirius-web-papaya",
-  "version": "2026.1.1",
+  "version": "2026.1.3",
   "author": "Eclipse Sirius",
   "license": "EPL-2.0",
   "repository": {
@@ -51,7 +51,7 @@
     "@eclipse-sirius/sirius-components-widget-reference": "*",
     "@eclipse-sirius/sirius-components-widget-table": "*",
     "@eclipse-sirius/sirius-web-application": "*",
-    "@ObeoNetwork/gantt-task-react": "0.6.2",
+    "@ObeoNetwork/gantt-task-react": "0.6.3",
     "@ObeoNetwork/react-trello": "2.4.11",
     "react-grid-layout": "1.4.4",
     "elkjs": "0.11.0",
@@ -103,7 +103,7 @@
     "@eclipse-sirius/sirius-components-validation": "*",
     "@eclipse-sirius/sirius-components-tsconfig": "*",
     "@eclipse-sirius/sirius-web-application": "*",
-    "@ObeoNetwork/gantt-task-react": "0.6.2",
+    "@ObeoNetwork/gantt-task-react": "0.6.3",
     "@ObeoNetwork/react-trello": "2.4.11",
     "react-grid-layout": "1.4.4",
     "elkjs": "0.11.0",

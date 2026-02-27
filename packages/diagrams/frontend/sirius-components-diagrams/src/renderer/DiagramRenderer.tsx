@@ -76,7 +76,6 @@ import { useMoveChange } from './move/useMoveChange';
 import { useNodeType } from './node/useNodeType';
 import { DiagramPalette } from './palette/DiagramPalette';
 import { useDiagramPalette } from './palette/useDiagramPalette';
-import { DiagramPanel } from './panel/DiagramPanel';
 import { useReconnectEdge } from './reconnect-edge/useReconnectEdge';
 import { useResizeChange } from './resize/useResizeChange';
 import { useDiagramSelection } from './selection/useDiagramSelection';
@@ -84,6 +83,7 @@ import { useLastElementSelectedChange } from './selection/useLastElementSelected
 import { useOnRightClickElement } from './selection/useOnRightClickElement';
 import { SnapToGridContext } from './snap-to-grid/SnapToGridContext';
 import { SnapToGridContextValue } from './snap-to-grid/SnapToGridContext.types';
+import { DiagramToolbar } from './toolbar/DiagramToolbar';
 
 const GRID_STEP: number = 10;
 
@@ -479,8 +479,7 @@ export const DiagramRenderer = memo(({ diagramRefreshedEventPayload }: DiagramRe
         ) : (
           <Background style={{ backgroundColor }} color={backgroundColor} />
         )}
-        <DiagramPanel reactFlowWrapper={ref} />
-
+        {diagramDescription.toolbar ? <DiagramToolbar diagramToolbar={diagramDescription.toolbar} /> : null}
         {isOpened ? (
           <DiagramPalette
             diagramId={diagramRefreshedEventPayload.diagram.id}

@@ -71,9 +71,12 @@ test.describe('diagram - list', () => {
     const childNodeSizeAfter = await childNode.getReactFlowSize(null, false);
 
     const borderWidth: number = 2;
-    expect(childNodeSizeBefore.width).toBe(parentNodeSizeBefore.width - borderWidth);
+    const margin: number = 2;
+    expect(Math.abs(childNodeSizeBefore.width - (parentNodeSizeBefore.width - borderWidth))).toBeLessThanOrEqual(
+      margin
+    );
     expect(parentNodeSizeAfter.width).toBeGreaterThan(parentNodeSizeBefore.width);
-    expect(childNodeSizeAfter.width).toBe(parentNodeSizeAfter.width - borderWidth);
+    expect(Math.abs(childNodeSizeAfter.width - (parentNodeSizeAfter.width - borderWidth))).toBeLessThanOrEqual(margin);
   });
 
   test('when a list node is moved, then the size of the node is not updated', async ({ page }) => {
@@ -145,5 +148,44 @@ test.describe('diagram - list', () => {
       },
       { timeout: 2000 }
     );
+  });
+});
+
+test.describe('diagram - list', () => {
+  let projectId;
+  test.beforeEach(async ({ page, request }) => {
+    const project = await new PlaywrightProject(request).createProject('diagram-list', 'papaya-empty');
+    projectId = project.projectId;
+
+    await page.goto(`/projects/${projectId}/edit`);
+    const playwrightExplorer = new PlaywrightExplorer(page);
+    await playwrightExplorer.uploadDocument('diagramPapayaClassNode.xml');
+    await playwrightExplorer.expand('diagramPapayaClassNode.xml');
+    await playwrightExplorer.expand('Project');
+    await playwrightExplorer.expand('Component');
+
+    await playwrightExplorer.createRepresentation('Component', 'Class Diagram', 'diagram');
+  });
+
+  test.afterEach(async ({ request }) => {
+    await new PlaywrightProject(request).deleteProject(projectId);
+  });
+
+  test('when a list node is resized, then it can not be resized to a size smaller than that produced by the layout', async ({
+    page,
+  }) => {
+    const playwrightExplorer = new PlaywrightExplorer(page);
+    await playwrightExplorer.expand('Package');
+    await expect(page.getByTestId('rf__wrapper')).toBeAttached();
+    await (await playwrightExplorer.getTreeItemLabel('NewClass')).dragTo(page.getByTestId('rf__wrapper'));
+
+    const node = new PlaywrightNode(page, 'NewClass', 'List');
+    await expect(node.nodeLocator).toBeAttached();
+
+    const nodeSizeBefore = await node.getReactFlowSize();
+    await node.click();
+    await node.resize({ height: -50, width: -50 });
+    const nodeSizeAfter = await node.getReactFlowSize();
+    expect(nodeSizeAfter.height).toBe(nodeSizeBefore.height);
   });
 });

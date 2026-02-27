@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.sirius.web.application.undo.services.handler;
 
+import java.util.Objects;
+import java.util.UUID;
+
 import org.eclipse.sirius.components.collaborative.diagrams.DiagramEventProcessor;
 import org.eclipse.sirius.components.collaborative.representations.api.IRepresentationEventProcessorRegistry;
 import org.eclipse.sirius.components.core.api.IEditingContext;
@@ -21,11 +24,8 @@ import org.eclipse.sirius.web.application.undo.services.api.IRepresentationChang
 import org.eclipse.sirius.web.application.undo.services.changes.DiagramLabelAppearanceChange;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.UUID;
-
 /**
- * Use to handle the undo/redo for the edition of the appearance of diagram labels.
+ * Used to handle the undo/redo for the edition of the appearance of diagram labels.
  *
  * @author mcharfadi
  */

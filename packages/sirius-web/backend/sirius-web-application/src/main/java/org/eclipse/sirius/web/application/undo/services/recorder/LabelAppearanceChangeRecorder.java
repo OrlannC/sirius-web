@@ -12,6 +12,12 @@
  *******************************************************************************/
 package org.eclipse.sirius.web.application.undo.services.recorder;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 import org.eclipse.sirius.components.collaborative.api.ChangeDescription;
 import org.eclipse.sirius.components.collaborative.diagrams.api.IDiagramEventConsumer;
 import org.eclipse.sirius.components.collaborative.diagrams.api.IDiagramInput;
@@ -30,14 +36,8 @@ import org.eclipse.sirius.web.application.undo.services.api.ILabelAppearanceChan
 import org.eclipse.sirius.web.application.undo.services.changes.DiagramLabelAppearanceChange;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 /**
- * Use to record data needed to perform the undo/redo for the label appearance changes.
+ * Used to record data needed to perform the undo/redo for the label appearance changes.
  *
  * @author mcharfadi
  */

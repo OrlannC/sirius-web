@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Obeo.
+ * Copyright (c) 2025, 2026 Obeo.
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -17,7 +17,7 @@ import java.util.UUID;
 import org.eclipse.sirius.components.core.api.IEditingContext;
 
 /**
- * Use to redo some representation changes.
+ * Used to redo some representation changes.
  *
  * @author mcharfadi
  */

@@ -12,15 +12,15 @@
  *******************************************************************************/
 package org.eclipse.sirius.web.application.undo.services.api;
 
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.sirius.components.diagrams.LabelStyle;
 import org.eclipse.sirius.components.diagrams.events.appearance.IAppearanceChange;
 import org.eclipse.sirius.components.diagrams.events.appearance.label.ILabelAppearanceChange;
 
-import java.util.List;
-import java.util.Set;
-
 /**
- * Use to provide new appearance changes from previous Label and previous Customized StyleProperties.
+ * Used to provide new appearance changes from previous Label and previous Customized StyleProperties.
  *
  * @author mcharfadi
  */

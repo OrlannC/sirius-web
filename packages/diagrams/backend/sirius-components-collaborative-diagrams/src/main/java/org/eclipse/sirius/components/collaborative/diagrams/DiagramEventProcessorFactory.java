@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import org.eclipse.sirius.components.collaborative.api.IRepresentationEventProcessor;
 import org.eclipse.sirius.components.collaborative.api.IRepresentationEventProcessorFactory;
-import org.eclipse.sirius.components.collaborative.api.IRepresentationPersistenceService;
+import org.eclipse.sirius.components.collaborative.api.IRepresentationPersistenceStrategy;
 import org.eclipse.sirius.components.collaborative.api.IRepresentationRefreshPolicyRegistry;
 import org.eclipse.sirius.components.collaborative.api.IRepresentationSearchService;
 import org.eclipse.sirius.components.collaborative.api.ISubscriptionManagerFactory;
@@ -52,24 +52,24 @@ public class DiagramEventProcessorFactory implements IRepresentationEventProcess
 
     private final IRepresentationRefreshPolicyRegistry representationRefreshPolicyRegistry;
 
-    private final IRepresentationPersistenceService representationPersistenceService;
-
     private final List<IDiagramInputReferencePositionProvider> diagramInputReferencePositionProviders;
 
     private final List<IDiagramEventConsumer> diagramEventConsumers;
 
-    public DiagramEventProcessorFactory(RepresentationEventProcessorFactoryConfiguration configuration, IDiagramCreationService diagramCreationService,
-            List<IDiagramEventHandler> diagramEventHandlers, IRepresentationPersistenceService representationPersistenceService, List<IDiagramInputReferencePositionProvider> diagramInputReferencePositionProviders,
-            List<IDiagramEventConsumer> diagramEventConsumers) {
+    private final IRepresentationPersistenceStrategy representationPersistenceStrategy;
+
+    public DiagramEventProcessorFactory(RepresentationEventProcessorFactoryConfiguration configuration, IDiagramCreationService diagramCreationService, List<IDiagramEventHandler> diagramEventHandlers,
+            org.eclipse.sirius.components.collaborative.api.IRepresentationPersistenceStrategy representationPersistenceStrategy,
+            List<IDiagramInputReferencePositionProvider> diagramInputReferencePositionProviders, List<IDiagramEventConsumer> diagramEventConsumers) {
         this.representationSearchService = Objects.requireNonNull(configuration.getRepresentationSearchService());
         this.diagramCreationService = Objects.requireNonNull(diagramCreationService);
         this.diagramEventHandlers = Objects.requireNonNull(diagramEventHandlers);
-        this.representationPersistenceService = Objects.requireNonNull(representationPersistenceService);
         this.subscriptionManagerFactory = Objects.requireNonNull(configuration.getSubscriptionManagerFactory());
         this.representationDescriptionSearchService = Objects.requireNonNull(configuration.getRepresentationDescriptionSearchService());
         this.representationRefreshPolicyRegistry = Objects.requireNonNull(configuration.getRepresentationRefreshPolicyRegistry());
         this.diagramInputReferencePositionProviders = Objects.requireNonNull(diagramInputReferencePositionProviders);
         this.diagramEventConsumers = Objects.requireNonNull(diagramEventConsumers);
+        this.representationPersistenceStrategy = Objects.requireNonNull(representationPersistenceStrategy);
     }
 
     @Override
@@ -91,8 +91,8 @@ public class DiagramEventProcessorFactory implements IRepresentationEventProcess
                     .subscriptionManager(this.subscriptionManagerFactory.create())
                     .diagramCreationService(this.diagramCreationService)
                     .representationDescriptionSearchService(this.representationDescriptionSearchService)
+                    .representationPersistenceStrategy(this.representationPersistenceStrategy)
                     .representationRefreshPolicyRegistry(this.representationRefreshPolicyRegistry)
-                    .representationPersistenceService(this.representationPersistenceService)
                     .representationSearchService(this.representationSearchService)
                     .diagramInputReferencePositionProviders(this.diagramInputReferencePositionProviders)
                     .diagramEventConsumers(this.diagramEventConsumers)

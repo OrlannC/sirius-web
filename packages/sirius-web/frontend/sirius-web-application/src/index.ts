@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Obeo.
+ * Copyright (c) 2023, 2026 Obeo.
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -15,6 +15,9 @@ export { SiriusWebApplication } from './application/SiriusWebApplication';
 export type { SiriusWebApplicationProps } from './application/SiriusWebApplication.types';
 export { ConfirmationDialogSettingsContextProvider } from './confirmationDialogSettings/ConfirmationDialogSettingsContext';
 export type { ConfirmationDialogSettingsContextValue } from './confirmationDialogSettings/ConfirmationDialogSettingsContext.types';
+export { FileUpload } from './core/file-upload/FileUpload';
+export { type FileUploadProps } from './core/file-upload/FileUpload.types';
+export { sendFile } from './core/sendFile';
 export { DiagramRepresentationConfiguration } from './diagrams/DiagramRepresentationConfiguration';
 export type { NodeTypeRegistry } from './diagrams/DiagramRepresentationConfiguration.types';
 export { DefaultExtensionRegistryMergeStrategy } from './extension/DefaultExtensionRegistryMergeStrategy';
@@ -98,6 +101,8 @@ export {
 export type { EditProjectNavbarSubtitleProps } from './views/edit-project/navbar/EditProjectNavbar.types';
 export { useCurrentProject } from './views/edit-project/useCurrentProject';
 export type { UseCurrentProjectValue } from './views/edit-project/useCurrentProject.types';
+export { useInitialWorkbenchConfiguration } from './views/edit-project/useInitialWorkbenchConfiguration';
+export type { UseInitialWorkbenchConfigurationValue } from './views/edit-project/useInitialWorkbenchConfiguration.types';
 export type { GQLProject } from './views/edit-project/useProjectAndRepresentationMetadata.types';
 export { DetailsView } from './views/edit-project/workbench-views/details/DetailsView';
 export type { GQLDetailsEventPayload } from './views/edit-project/workbench-views/details/useDetailsViewSubscription.types';
@@ -119,6 +124,12 @@ export {
   type GQLTreeRefreshedEventPayload,
   type UseExplorerSubscriptionValue,
 } from './views/edit-project/workbench-views/explorer/useExplorerSubscription.types';
+export { ExportAsCsvButton } from './views/edit-project/workbench-views/query/ExportAsCsvButton';
+export { queryViewResultButtonExtensionPoint } from './views/edit-project/workbench-views/query/QueryViewExtensionPoints';
+export {
+  type QueryResultButtonComponentProps,
+  type QueryResultButtonContribution,
+} from './views/edit-project/workbench-views/query/QueryViewExtensionPoints.types';
 export { useRelatedElementsViewSubscription } from './views/edit-project/workbench-views/related-elements/useRelatedElementsViewSubscription';
 export {
   type GQLFormRefreshedEventPayload,
