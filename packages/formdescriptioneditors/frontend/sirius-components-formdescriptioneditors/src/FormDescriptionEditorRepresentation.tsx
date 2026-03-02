@@ -154,6 +154,7 @@ export const FormDescriptionEditorRepresentation = forwardRef<
         return {
           id: representationId,
           applySelection: null,
+          applyLayout: null,
         };
       },
       []

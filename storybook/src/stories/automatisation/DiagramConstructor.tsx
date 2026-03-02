@@ -1,8 +1,8 @@
-import { ApolloClient, InMemoryCache, Observable, ApolloLink, type RequestHandler, type Operation, type FetchResult, type NextLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, Observable, ApolloLink, type RequestHandler, type Operation, type FetchResult} from '@apollo/client';
 
 import { GQLViewModifier } from '@eclipse-sirius/sirius-components-diagrams';
 import type { GQLNode, GQLDiagram, GQLNodeLayoutData, GQLDiagramDescription, GQLNodeDescription, GQLEdge } from '@eclipse-sirius/sirius-components-diagrams';
-import type { GQLDiagramLayoutData, GQLEdgeLayoutData, GQLRepresentationMetadata } from '@eclipse-sirius/sirius-components-diagrams/graphql/subscription/diagramFragment.types';
+import type { GQLEdgeLayoutData, GQLRepresentationMetadata } from '@eclipse-sirius/sirius-components-diagrams/graphql/subscription/diagramFragment.types';
 import type { GQLEdgeStyle } from '@eclipse-sirius/sirius-components-diagrams/graphql/subscription/edgeFragment.types';
 import type { GQLInsideLabel, GQLLabelStyle } from '@eclipse-sirius/sirius-components-diagrams/graphql/subscription/labelFragment.types';
 import type { GQLRectangularNodeStyle } from '@eclipse-sirius/sirius-components-diagrams/graphql/subscription/nodeFragment.types';
@@ -39,7 +39,13 @@ const createDefaultDescription = (): GQLDiagramDescription => {
     nodeDescriptions: [nodeDesc, childNodeDesc],
     edgeDescriptions: [],
     childNodeDescriptionIds: [],
-    actions: []
+    actions: [],
+    toolbar: {
+      id: 'default-toolbar',
+      actions: [],
+      expandedByDefault: true,
+      __typename: 'Toolbar'
+    }
   } as any;
 
   return runtimeDescription;
@@ -258,7 +264,7 @@ export const addChildNode = (diagram: GQLDiagram, params: AddChildNodeParams): G
 
   const nodeStyle: GQLRectangularNodeStyle = {
     __typename: 'RectangularNodeStyle',
-    background: 'transparent', // Une couleur de fond légèrement différente pour distinguer l'entité
+    background: 'transparent',
     borderColor: 'orange',
     borderStyle: 'SOLID',
     borderSize: 1,
@@ -368,7 +374,6 @@ export const createDiagram = (diagram: GQLDiagram) => {
         editingContext: {
           __typename: 'EditingContext',
           id: 'root',
-          objects: [],
           representation: enrichedDiagram.metadata,
           representations: {
             __typename: 'EditingContextRepresentationsConnection',

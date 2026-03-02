@@ -39,6 +39,7 @@ import {
   GQLDiagramDescriptionVariables,
 } from './DiagramRepresentation.types';
 import { DiagramSubscriptionProvider } from './DiagramSubscriptionProvider';
+import { useArrangeAll } from '../renderer/layout/arrange-all/useArrangeAll';
 
 export const getDiagramDescription = gql`
   query getDiagramDescription($editingContextId: ID!, $representationId: ID!) {
@@ -85,6 +86,7 @@ const ApplySelectionWrapper = forwardRef(
     ref: ForwardedRef<WorkbenchMainRepresentationHandle>
   ) => {
     const { applySelection: applyAndRevealSelection } = useApplySelection();
+    const { arrangeAll } = useArrangeAll();
     useImperativeHandle(
       ref,
       () => {
@@ -92,6 +94,9 @@ const ApplySelectionWrapper = forwardRef(
           id: props.representationId,
           applySelection: (selection: Selection) => {
             applyAndRevealSelection(selection, true);
+          },
+          applyLayout: async (layoutOptions) => {
+            await arrangeAll(layoutOptions);
           },
         };
       },

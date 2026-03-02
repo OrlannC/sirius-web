@@ -87,6 +87,7 @@ export const PortalRepresentation = forwardRef<WorkbenchMainRepresentationHandle
         return {
           id: representationId,
           applySelection: null,
+          applyLayout: null,
         };
       },
       []

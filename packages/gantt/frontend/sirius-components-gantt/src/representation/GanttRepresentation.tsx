@@ -86,6 +86,7 @@ export const GanttRepresentation = forwardRef<WorkbenchMainRepresentationHandle,
         return {
           id: representationId,
           applySelection: null,
+          applyLayout: null,
         };
       },
       []

@@ -134,4 +134,5 @@ export interface WorkbenchRepresentationEditorConfiguration {
 export interface WorkbenchMainRepresentationHandle {
   id: string;
   applySelection: ((selection: Selection) => void) | null;
+  applyLayout: ((layoutOptions: any) => Promise<void>) | null;
 }
