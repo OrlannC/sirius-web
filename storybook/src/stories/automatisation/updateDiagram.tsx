@@ -24,13 +24,13 @@ export const DiagramStoryWrapper = ({ args, diagramGenerator, layoutOptions}: { 
     const client = createDiagram(initial.diagram)
 
     useEffect(() => {
+        if (!args.autoLayout) return;
         setTimeout(() => {
             if (diagramHandleRef.current?.applyLayout) {
                 diagramHandleRef.current.applyLayout(layoutOptions);
             } 
         }, 1000);
     }, [args.autoLayout, layoutOptions]);
-    
     return (
     <ApolloProvider client={client}>
         <I18nextProvider i18n={i18n}>
