@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { type ComponentProps, type MutableRefObject } from 'react';
+import { type ComponentProps } from 'react';
 import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
@@ -11,15 +11,15 @@ type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; wedgeCrit: stri
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
-  title: 'Radial Algorithm',
+  title: 'Radial algorithm',
   component: DiagramRepresentation,
   tags: ['autodocs'],
   argTypes: {
-    autoLayout: { control: 'boolean' },
-    nodeNode: {},
-    wedgeCrit: { control: 'select', options: ['LEAF_NUMBER', 'NODE_SIZE'] },
-    compactor: { control: 'select', options: ['NONE', 'RADIAL_COMPACTION', 'WEDGE_COMPACTION'] },
-    optiCrit: { control: 'select', options: ['NONE', 'EDGE_LENGTH', 'EDGE_LENGTH_BY_POSITION ', 'CROSSING_MINIMIZATION_BY_POSITION'] },
+    autoLayout: { name: 'Auto-layout', control: 'boolean' },
+    nodeNode: { name: 'Node spacing', control: 'number'},
+    wedgeCrit: { name: 'Wedge criterion', control: 'select', options: ['LEAF_NUMBER', 'NODE_SIZE'] },
+    compactor: { name: 'Compaction method', control: 'select', options: ['NONE', 'RADIAL_COMPACTION', 'WEDGE_COMPACTION'] },
+    optiCrit: { name: 'Optimization criterion', control: 'select', options: ['NONE', 'EDGE_LENGTH', 'EDGE_LENGTH_BY_POSITION ', 'CROSSING_MINIMIZATION_BY_POSITION'] },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -37,7 +37,8 @@ const getElkRadialOptions = (args: StoryCustomArgs): LayoutOptions => {
 
 const listDiagram = AllScenarioDiagram();
 
-export const AllScenario: StoryObj<DiagramStoryArgs> = {
+export const AllScenarios: StoryObj<DiagramStoryArgs> = {
+  name: 'All scenarios in one story',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -59,7 +60,8 @@ export const AllScenario: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const Basique: StoryObj<DiagramStoryArgs> = {
+export const Basic: StoryObj<DiagramStoryArgs> = {
+  name: 'Scenario sirius studio example',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -78,7 +80,8 @@ export const Basique: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const FiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNodes: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with five nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -97,7 +100,8 @@ export const FiveNode: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const TwoNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with two groups of nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -114,7 +118,8 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const ThreeNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with three groups of nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,

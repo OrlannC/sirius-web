@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { type ComponentProps, type MutableRefObject } from 'react';
+import { type ComponentProps } from 'react';
 import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
 import { DiagramStoryWrapper } from './automatisation/updateDiagram';
-import { AllScenarioDiagram, BasiqueSiriusDiagram, FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram, TestDiagram } from './automatisation/Scenario';
+import { AllScenarioDiagram, BasiqueSiriusDiagram, FiveNodeDiagram, ThreeNodeGroupDiagram, TwoNodeGroupDiagram} from './automatisation/Scenario';
 import type { LayoutOptions } from 'elkjs';
 
 type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; iterations: number; model: string; };
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
-  title: 'Force Algorithm',
+  title: 'Force algorithm',
   component: DiagramRepresentation,
   tags: ['autodocs'],
   argTypes: {
-    autoLayout: { control: 'boolean' },
-    nodeNode: { },
-    iterations: { },
-    model: { control: 'select', options: ['EADES', 'FRUCHTERMAN_REINGOLD'] },
+    autoLayout: { name: 'Auto-layout', control: 'boolean' },
+    nodeNode: { name: 'Node spacing', control: 'number' },
+    iterations: { name: 'Iterations', control: 'number'  },
+    model: { name: 'Force model', control: 'select', options: ['EADES', 'FRUCHTERMAN_REINGOLD'] },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -35,7 +35,8 @@ const getElkForceOptions = (args: StoryCustomArgs): LayoutOptions => {
 
 const listDiagram = AllScenarioDiagram();
 
-export const AllScenario: StoryObj<DiagramStoryArgs> = {
+export const AllScenarios: StoryObj<DiagramStoryArgs> = {
+  name: 'All scenarios in one story',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -56,7 +57,8 @@ export const AllScenario: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const Basique: StoryObj<DiagramStoryArgs> = {
+export const Basic: StoryObj<DiagramStoryArgs> = {
+  name: 'Scenario sirius studio example',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -74,7 +76,8 @@ export const Basique: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const FiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNodes: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with five nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -92,7 +95,8 @@ export const FiveNode: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const TwoNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with two groups of nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -110,7 +114,8 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const ThreeNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with three groups of nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -122,24 +127,6 @@ export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
       <DiagramStoryWrapper
           args={args}
           diagramGenerator={ThreeNodeGroupDiagram}
-          layoutOptions={getElkForceOptions(args)}
-      />
-    </div>
-  )
-};
-
-export const Test: StoryObj<DiagramStoryArgs> = {
-  args:{
-    autoLayout: true,
-    nodeNode: 80,
-    iterations: 300,
-    model: 'FRUCHTERMAN_REINGOLD',
-  },
-  render: (args) => (
-    <div style={{width: '100vw', height: '100vh'}}>
-      <DiagramStoryWrapper
-          args={args}
-          diagramGenerator={TestDiagram}
           layoutOptions={getElkForceOptions(args)}
       />
     </div>

@@ -65,22 +65,16 @@ export const BasiqueSiriusDiagram = () => {
   d = addEdge(d, { id: 'e2', sourceId: 'n1', targetId: 'n3' });
   d = addEdge(d, { id: 'e3', sourceId: 'n2', targetId: 'n3' });
 
+  d = addChildNode(d, { parentId: 'n2', id: 'enfant-1', label: 'name', x: 0, y: 40, width: 120, height: 60 });
+  d = addChildNode(d, { parentId: 'n2', id: 'enfant-2', label: 'attribute2', x: 140, y: 40, width: 120, height: 60 });
+  d = addChildNode(d, { parentId: 'n2', id: 'enfant-3', label: 'attribute3', x: 0, y: 100, width: 120, height: 60 });
+
+  d = addChildNode(d, { parentId: 'n3', id: 'enfant-4', label: 'name', x: 0, y: 100, width: 120, height: 60 });
+
   return { diagram: d, client: createDiagram(d)}
 };
 
 export const AllScenarioDiagram = () => {
   const listDiagram = [BasiqueSiriusDiagram,FiveNodeDiagram,TwoNodeGroupDiagram,ThreeNodeGroupDiagram];
   return listDiagram;
-};
-
-export const TestDiagram = () => {
-  let d = buildDiagram('Test Diagram')
-  d = addNode(d, { id: 'parent-1', label: 'Parent', x: 0, y: 0, width: 300, height: 180 });
-  d = addChildNode(d, { parentId: 'parent-1', id: 'enfant-1', label: 'Entité 1', x: 0, y: 40, width: 120, height: 60 });
-  d = addChildNode(d, { parentId: 'parent-1', id: 'enfant-2', label: 'Entité 2', x: 140, y: 40, width: 120, height: 60 });
-  d = addChildNode(d, { parentId: 'parent-1', id: 'enfant-3', label: 'Entité 3', x: 0, y: 100, width: 120, height: 60 });
-
-  d = addNode(d, { id: 'n2', label: 'node 2', x: 400, y: 0, width: 120, height: 60 });
-  d = addEdge(d, { id: 'e1', sourceId: 'parent-1', targetId: 'n2' });
-  return { diagram: d, client: createDiagram(d)}
 };

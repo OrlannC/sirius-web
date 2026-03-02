@@ -36,7 +36,7 @@ export const DiagramStoryWrapper = ({ args, diagramGenerator, layoutOptions}: { 
         <I18nextProvider i18n={i18n}>
             <ServerContext.Provider value={{ httpOrigin: 'http://localhost' }}>
                 <SelectionContextProvider initialSelection={{ entries: [] }}>
-                    <div className={"diagramRepresentationContainer"} style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <div className={"diagramRepresentationContainer"}>
                         <DiagramRepresentation {...args} ref={diagramHandleRef}/>
                     </div>
                 </SelectionContextProvider>

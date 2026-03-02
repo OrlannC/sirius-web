@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { type ComponentProps, type MutableRefObject } from 'react';
+import { type ComponentProps } from 'react';
 import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
@@ -20,47 +20,47 @@ type StoryCustomArgs = { autoLayout?: boolean; algorithm: string; nodeNode: numb
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
-  title: 'All Algorithm',
+  title: 'All algorithms',
   component: DiagramRepresentation,
   tags: ['autodocs'],
   argTypes: {
-    autoLayout: { control: 'boolean' },
-    algorithm: { control: 'select', options: ['layered','rectpacking','stress','mrtree','radial','force','sporeOverlap','sporeCompaction'] },
-    nodeNode: { if: { arg: 'algorithm', neq: 'stress' } },
+autoLayout: { name: 'Auto-layout', control: 'boolean' },
+    algorithm: { name: 'Algorithm', control: 'select', options: ['force', 'layered', 'mrtree', 'radial', 'rectpacking', 'sporeCompaction', 'sporeOverlap','stress'] },
+    nodeNode: { name: 'Node spacing', control: 'number', if: { arg: 'algorithm', neq: 'stress' } },
 
-    directionL: { control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['DOWN', 'RIGHT','LEFT','UP'] },
-    nodeNodeBetweenLayers: { if: { arg: 'algorithm', eq: 'layered' } },
-    componentComponent: { if: { arg: 'algorithm', eq: 'layered' } },
-    edgeNodeBetweenLayers: { if: { arg: 'algorithm', eq: 'layered' } },
-    layStrat: { control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['NETWORK_SIMPLEX', 'LONGEST_PATH', 'LONGEST_PATH_SOURCE'] },
-    nodePlacStrat: { control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['NETWORK_SIMPLEX', 'LINEAR_SEGMENTS', 'SIMPLE', 'BRANDES_KOEPF'] },
-    contentAlignLayered: { control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['V_TOP H_LEFT', 'V_TOP H_CENTER', 'V_TOP H_RIGHT', 'V_CENTER H_LEFT', 'V_CENTER H_CENTER', 'V_CENTER H_RIGHT', 'V_BOTTOM H_LEFT', 'V_BOTTOM H_CENTER', 'V_BOTTOM H_RIGHT'] },
+    directionL: { name: 'Layout direction', control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['DOWN', 'RIGHT', 'LEFT', 'UP'] },
+    nodeNodeBetweenLayers: { name: 'Node spacing between layers', control: 'number', if: { arg: 'algorithm', eq: 'layered' } },
+    componentComponent: { name: 'Component spacing', control: 'number', if: { arg: 'algorithm', eq: 'layered' } },
+    edgeNodeBetweenLayers: { name: 'Edge spacing between layers', control: 'number', if: { arg: 'algorithm', eq: 'layered' } },
+    layStrat: { name: 'Layering strategy', control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['NETWORK_SIMPLEX', 'LONGEST_PATH', 'LONGEST_PATH_SOURCE'] },
+    nodePlacStrat: { name: 'Node placement strategy', control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['NETWORK_SIMPLEX', 'LINEAR_SEGMENTS', 'SIMPLE', 'BRANDES_KOEPF'] },
+    contentAlignLayered: { name: 'Content alignment', control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['V_TOP H_LEFT', 'V_TOP H_CENTER', 'V_TOP H_RIGHT', 'V_CENTER H_LEFT', 'V_CENTER H_CENTER', 'V_CENTER H_RIGHT', 'V_BOTTOM H_LEFT', 'V_BOTTOM H_CENTER', 'V_BOTTOM H_RIGHT'] },
     
-    directionT: { control: 'select', if: { arg: 'algorithm', eq: 'mrtree' }, options: ['DOWN', 'RIGHT','LEFT','UP'] },
-    edgeNode: { if: { arg: 'algorithm', eq: 'mrtree' }},
-    edgeRoutingMode: { control: 'select', if: { arg: 'algorithm', eq: 'mrtree' }, options: ['AVOID_OVERLAP', 'MIDDLE_TO_MIDDLE', 'NONE'] },
-    wheighting: { control: 'select', if: { arg: 'algorithm', eq: 'mrtree' }, options: ['MODEL_ORDER', 'DESCENDANTS', 'FAN','CONSTRAINT'] },
+    directionT: { name: 'Layout direction', control: 'select', if: { arg: 'algorithm', eq: 'mrtree' }, options: ['DOWN', 'RIGHT', 'LEFT', 'UP'] },
+    edgeNode: { name: 'Edge spacing', control: 'number', if: { arg: 'algorithm', eq: 'mrtree' } },
+    edgeRoutingMode: { name: 'Edge routing mode', control: 'select', if: { arg: 'algorithm', eq: 'mrtree' }, options: ['AVOID_OVERLAP', 'MIDDLE_TO_MIDDLE', 'NONE'] },
+    wheighting: { name: 'Weighting method', control: 'select', if: { arg: 'algorithm', eq: 'mrtree' }, options: ['MODEL_ORDER', 'DESCENDANTS', 'FAN', 'CONSTRAINT'] },
 
-    whiteSpaceStart: { control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['EQUAL_BETWEEN_STRUCTURES', 'TO_ASPECT_RATIO', 'NONE'] },
-    approStrat: { control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['GREEDY', 'TARGET_WIDTH'] },
-    targetWidth: { if: { arg: 'algorithm', eq: 'rectpacking' } },
-    contentAlignRect: { control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['V_TOP H_LEFT', 'V_TOP H_CENTER', 'V_TOP H_RIGHT', 'V_CENTER H_LEFT', 'V_CENTER H_CENTER', 'V_CENTER H_RIGHT', 'V_BOTTOM H_LEFT', 'V_BOTTOM H_CENTER', 'V_BOTTOM H_RIGHT'] },
-    approOptiGoal: { control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['ASPECT_RATIO_DRIVEN', 'MAX_SCALE_DRIVEN', 'AREA_DRIVEN'] },
+    whiteSpaceStart: { name: 'White space distribution', control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['EQUAL_BETWEEN_STRUCTURES', 'TO_ASPECT_RATIO', 'NONE'] },
+    approStrat: { name: 'Packing strategy', control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['GREEDY', 'TARGET_WIDTH'] },
+    targetWidth: { name: 'Target width', control: 'number', if: { arg: 'algorithm', eq: 'rectpacking' } },
+    contentAlignRect: { name: 'Content alignment', control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['V_TOP H_LEFT', 'V_TOP H_CENTER', 'V_TOP H_RIGHT', 'V_CENTER H_LEFT', 'V_CENTER H_CENTER', 'V_CENTER H_RIGHT', 'V_BOTTOM H_LEFT', 'V_BOTTOM H_CENTER', 'V_BOTTOM H_RIGHT'] },
+    approOptiGoal: { name: 'Optimization goal', control: 'select', if: { arg: 'algorithm', eq: 'rectpacking' }, options: ['ASPECT_RATIO_DRIVEN', 'MAX_SCALE_DRIVEN', 'AREA_DRIVEN'] },
 
-    wedgeCrit: { control: 'select', if: { arg: 'algorithm', eq: 'radial' }, options: ['LEAF_NUMBER', 'NODE_SIZE'] },
-    compactor: { control: 'select', if: { arg: 'algorithm', eq: 'radial' }, options: ['NONE', 'RADIAL_COMPACTION', 'WEDGE_COMPACTION'] },
-    optiCrit: { control: 'select', if: { arg: 'algorithm', eq: 'radial' }, options: ['NONE', 'EDGE_LENGTH', 'EDGE_LENGTH_BY_POSITION ', 'CROSSING_MINIMIZATION_BY_POSITION'] },
+    wedgeCrit: { name: 'Wedge criterion', control: 'select', if: { arg: 'algorithm', eq: 'radial' }, options: ['LEAF_NUMBER', 'NODE_SIZE'] },
+    compactor: { name: 'Compaction method', control: 'select', if: { arg: 'algorithm', eq: 'radial' }, options: ['NONE', 'RADIAL_COMPACTION', 'WEDGE_COMPACTION'] },
+    optiCrit: { name: 'Optimization criterion', control: 'select', if: { arg: 'algorithm', eq: 'radial' }, options: ['NONE', 'EDGE_LENGTH', 'EDGE_LENGTH_BY_POSITION ', 'CROSSING_MINIMIZATION_BY_POSITION'] },
  
-    spanningTree: { control: 'select', if: { arg: 'algorithm', eq: 'sporeCompaction' }, options: ['CENTER_DISTANCE', 'CIRCLE_UNDERLAP', 'RECTANGLE_UNDERLAP', 'INVERTED_OVERLAP', 'MINIMUM_ROOT_DISTANCE'] },
-    treeConstrution: { control: 'select', if: { arg: 'algorithm', eq: 'sporeCompaction' }, options: ['MINIMUM_SPANNING_TREE', 'MAXIMUM_SPANNING_TREE'] },
+    spanningTree: { name: 'Spanning tree metric', control: 'select', if: { arg: 'algorithm', eq: 'sporeCompaction' }, options: ['CENTER_DISTANCE', 'CIRCLE_UNDERLAP', 'RECTANGLE_UNDERLAP', 'INVERTED_OVERLAP', 'MINIMUM_ROOT_DISTANCE'] },
+    treeConstrution: { name: 'Construction method', control: 'select', if: { arg: 'algorithm', eq: 'sporeCompaction' }, options: ['MINIMUM_SPANNING_TREE', 'MAXIMUM_SPANNING_TREE'] },
 
-    model: { control: 'select', if: { arg: 'algorithm', eq: 'force' }, options: ['EADES', 'FRUCHTERMAN_REINGOLD'] },
-    iterations: { if: { arg: 'algorithm', eq: 'force' } },
+    model: { name: 'Force model', control: 'select', if: { arg: 'algorithm', eq: 'force' }, options: ['EADES', 'FRUCHTERMAN_REINGOLD'] },
+    iterations: { name: 'Iterations', control: 'number', if: { arg: 'algorithm', eq: 'force' } },
 
-    maxIterations: { if: { arg: 'algorithm', eq: 'sporeOverlap' } },
+    maxIterations: { name: 'Maximum iterations', control: 'number', if: { arg: 'algorithm', eq: 'sporeOverlap' } },
 
-    desiredEdgeLength: { if: { arg: 'algorithm', eq: 'stress' } },
-    dimension: { control: 'select', if: { arg: 'algorithm', eq: 'stress' }, options: ['XY', 'X', 'Y'] },
+    desiredEdgeLength: { name: 'Edge length', control: 'number', if: { arg: 'algorithm', eq: 'stress' } },
+    dimension: { name: 'Layout Direction', control: 'select', if: { arg: 'algorithm', eq: 'stress' }, options: ['XY', 'X', 'Y'] },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -151,7 +151,8 @@ const getElkOptions = (args: StoryCustomArgs): LayoutOptions => {
 
 const listDiagram = AllScenarioDiagram();
 
-export const AllScenario: StoryObj<DiagramStoryArgs> = {
+export const AllScenarios: StoryObj<DiagramStoryArgs> = {
+  name: 'All scenarios in one story',
   args:{
     autoLayout: true,
     algorithm: "layered",
@@ -205,7 +206,8 @@ export const AllScenario: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const Basique: StoryObj<DiagramStoryArgs> = {
+export const Basic: StoryObj<DiagramStoryArgs> = {
+  name: 'Scenario sirius studio example',
   args:{
     autoLayout: true,
     algorithm: "layered",
@@ -256,7 +258,8 @@ export const Basique: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const FiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNodes: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with five nodes',
   args:{
     autoLayout: true,
     algorithm: "layered",
@@ -307,7 +310,8 @@ export const FiveNode: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const TwoNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with two groups of nodes',
   args:{
     autoLayout: true,
     algorithm: "layered",
@@ -358,7 +362,8 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const ThreeNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with three groups of nodes',
   args:{
     autoLayout: true,
     algorithm: "layered",

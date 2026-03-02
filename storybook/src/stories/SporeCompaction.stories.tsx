@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { type ComponentProps, type MutableRefObject } from 'react';
+import { type ComponentProps } from 'react';
 import './automatisation/Global.css'
 import 'reactflow/dist/style.css';
 import { DiagramRepresentation} from '@eclipse-sirius/sirius-components-diagrams';
@@ -11,14 +11,14 @@ type StoryCustomArgs = { autoLayout?: boolean; nodeNode: number; spanningTree: s
 type DiagramStoryArgs = ComponentProps<typeof DiagramRepresentation> & StoryCustomArgs;
 
 const meta = {
-  title: 'Spore Compaction Algorithm',
+  title: 'Spore compaction algorithm',
   component: DiagramRepresentation,
   tags: ['autodocs'],
   argTypes: {
-    autoLayout: { control: 'boolean' },
-    nodeNode: {},
-    spanningTree: { control: 'select', options: ['CENTER_DISTANCE', 'CIRCLE_UNDERLAP', 'RECTANGLE_UNDERLAP', 'INVERTED_OVERLAP', 'MINIMUM_ROOT_DISTANCE'] },
-    treeConstrution: { control: 'select', options: ['MINIMUM_SPANNING_TREE', 'MAXIMUM_SPANNING_TREE'] },
+    autoLayout: { name: 'Auto-layout', control: 'boolean' },
+    nodeNode: {name: 'Node spacing', control: 'number'},
+    spanningTree: { name: 'Spanning tree metric', control: 'select', options: ['CENTER_DISTANCE', 'CIRCLE_UNDERLAP', 'RECTANGLE_UNDERLAP', 'INVERTED_OVERLAP', 'MINIMUM_ROOT_DISTANCE'] },
+    treeConstrution: { name: 'Construction Method', control: 'select', options: ['MINIMUM_SPANNING_TREE', 'MAXIMUM_SPANNING_TREE'] },
   },
 } satisfies Meta<DiagramStoryArgs>;
 
@@ -35,7 +35,8 @@ const getElkSporeCompactionOptions = (args: StoryCustomArgs): LayoutOptions => {
 
 const listDiagram = AllScenarioDiagram();
 
-export const AllScenario: StoryObj<DiagramStoryArgs> = {
+export const AllScenarios: StoryObj<DiagramStoryArgs> = {
+  name: 'All scenarios in one story',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -56,7 +57,8 @@ export const AllScenario: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const Basique: StoryObj<DiagramStoryArgs> = {
+export const Basic: StoryObj<DiagramStoryArgs> = {
+  name: 'Scenario sirius studio example',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -74,7 +76,8 @@ export const Basique: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const FiveNode: StoryObj<DiagramStoryArgs> = {
+export const FiveNodes: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with five nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -92,7 +95,8 @@ export const FiveNode: StoryObj<DiagramStoryArgs> = {
   )
 };
 
-export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
+export const TwoNodesGroups: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with two groups of nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
@@ -111,6 +115,7 @@ export const TwoNodeGroup: StoryObj<DiagramStoryArgs> = {
 };
 
 export const ThreeNodeGroup: StoryObj<DiagramStoryArgs> = {
+  name:'Scenario with three groups of nodes',
   args:{
     autoLayout: true,
     nodeNode: 80,
