@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Obeo.
+ * Copyright (c) 2026 Obeo.
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -10,8 +10,18 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-import { LayoutOptions } from 'elkjs/lib/elk-api';
+import type { Meta, StoryObj } from "@storybook/react";
+import { RepresentationsAreaWrapper } from "../../utils/test/RepresentationAreaWrapper";
 
-export interface UseArrangeAllValue {
-  arrangeAll: (layoutOptions: LayoutOptions, selectedNodesIds?: string[]) => Promise<void>;
-}
+const meta = {
+  title: "Test/Representations Area",
+  tags: ["autodocs"],
+} satisfies Meta;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const RepresentationsArea: Story = {
+  name: "Default Representations Area",
+  render: () => <RepresentationsAreaWrapper />,
+};

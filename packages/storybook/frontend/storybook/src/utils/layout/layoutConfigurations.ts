@@ -17,6 +17,7 @@ import type { ComponentProps } from "react";
 type StoryCustomArgs = {
   autoLayout?: boolean;
   algorithm?: string;
+  aiPrompt?: string;
   nodeNode?: number;
   contentAlign?: string;
   direction?: string;
@@ -272,6 +273,8 @@ export const getElkAllAlgorithmsOptions = (
 export const defaultAllAlgorithmsConfiguration = {
   autoLayout: true,
   algorithm: "layered",
+  aiPrompt:
+    "Tu es un ingénieur senior en visualisation de données. Analyse cet agencement technique de manière pragmatique. CONSIGNES : 1. Focus Structurel : Ignore totalement l'esthétique (couleurs, polices, style). Concentre-toi sur le routage des arêtes et la disposition des blocs. 2. Échelle de Sévérité Contextuelle : - Petit graphe (< 10 nœuds) : Si la lecture est immédiate et qu'il n'y a pas d'erreur majeure (texte écrasé, flux illogique), la note doit être élevée (> 7/10). Ne pénalise pas les micro-décalages de pixels ou les coudes inutiles. - Gros graphe (> 30 nœuds) : Sois exigeant sur la gestion du chaos, les croisements et la compacité. 3. Note sur 10 : Évalue si le diagramme remplit sa mission d'information sans effort cognitif. Réponse courte : [Critique] | [Note]/10",
   nodeNode: 80,
 
   directionL: "DOWN",

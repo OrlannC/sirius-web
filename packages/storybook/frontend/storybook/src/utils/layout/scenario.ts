@@ -178,7 +178,12 @@ export const ThreeNodeGroupDiagram = () => {
     width: 120,
     height: 60,
   });
-  d = addEdge(d, { id: "e1", sourceId: "n1", targetId: "n2" });
+  d = addEdge(d, {
+    id: "e1",
+    sourceId: "n1",
+    targetId: "n2",
+    label: "Edge 1",
+  });
 
   d = addNode(d, {
     id: "n3",
@@ -196,7 +201,12 @@ export const ThreeNodeGroupDiagram = () => {
     width: 120,
     height: 60,
   });
-  d = addEdge(d, { id: "e2", sourceId: "n3", targetId: "n4" });
+  d = addEdge(d, {
+    id: "e2",
+    sourceId: "n3",
+    targetId: "n4",
+    label: "Edge 2",
+  });
 
   d = addNode(d, {
     id: "n5",
@@ -214,7 +224,12 @@ export const ThreeNodeGroupDiagram = () => {
     width: 120,
     height: 60,
   });
-  d = addEdge(d, { id: "e3", sourceId: "n5", targetId: "n6" });
+  d = addEdge(d, {
+    id: "e3",
+    sourceId: "n5",
+    targetId: "n6",
+    label: "Edge 3",
+  });
 
   return d;
 };

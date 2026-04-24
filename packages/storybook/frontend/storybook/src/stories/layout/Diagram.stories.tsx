@@ -23,6 +23,8 @@ const meta = {
   argTypes: {
     autoLayout: { name: 'Auto-layout', control: 'boolean' },
     algorithm: { name: 'Algorithm', control: 'select', options: ['force', 'layered', 'mrtree', 'radial', 'rectpacking', 'sporeCompaction', 'sporeOverlap','stress'] },
+    aiPrompt: { name: 'Prompt IA', control: 'text' },
+
     nodeNode: { name: 'Node spacing', control: 'number', if: { arg: 'algorithm', neq: 'stress' } },
 
     directionL: { name: 'Layout direction', control: 'select', if: { arg: 'algorithm', eq: 'layered' }, options: ['DOWN', 'RIGHT', 'LEFT', 'UP'] },
@@ -58,6 +60,7 @@ const meta = {
 
     desiredEdgeLength: { name: 'Edge length', control: 'number', if: { arg: 'algorithm', eq: 'stress' } },
     dimension: { name: 'Layout Direction', control: 'select', if: { arg: 'algorithm', eq: 'stress' }, options: ['XY', 'X', 'Y'] },
+    
   },
 } satisfies Meta<DiagramStoryArgs>;
 
