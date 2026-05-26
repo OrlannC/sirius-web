@@ -181,6 +181,13 @@ const meta: Meta<DiagramStoryArgs> = {
     },
     iterations: { name: 'Iterations', control: 'number', if: { arg: 'algorithm', eq: 'force' } },
 
+    underlyingLayoutAlgorithm: {
+      name: 'Underlying layout algorithm',
+      control: 'select',
+      if: { arg: 'algorithm', eq: 'sporeOverlap' },
+      options: ['force', 'layered', 'mrtree', 'radial', 'rectpacking', 'sporeCompaction', 'sporeOverlap', 'stress'],
+    },
+    fixedGraphSize: { name: 'Fixed graph size', control: 'boolean', if: { arg: 'algorithm', eq: 'sporeOverlap' } },
     maxIterations: { name: 'Maximum iterations', control: 'number', if: { arg: 'algorithm', eq: 'sporeOverlap' } },
 
     desiredEdgeLength: { name: 'Edge length', control: 'number', if: { arg: 'algorithm', eq: 'stress' } },

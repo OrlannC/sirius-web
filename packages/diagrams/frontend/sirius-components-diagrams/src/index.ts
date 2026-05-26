@@ -44,6 +44,7 @@ export type {
   GQLNode,
   GQLNodeDecorator,
   GQLNodeStyle,
+  GQLPosition,
   GQLRectangularNodeStyle,
 } from './graphql/subscription/nodeFragment.types';
 export { Action, ACTION_ICON_SIZE } from './renderer/actions/Action';

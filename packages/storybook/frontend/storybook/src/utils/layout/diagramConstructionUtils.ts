@@ -33,11 +33,10 @@ export const createDefaultPalette = (): GQLPalette => ({
 });
 
 export const createDefaultDescription = (rawDesc?: GQLDiagramDescription): EnrichedDescription => {
-  const description = rawDesc as any;
+  const description = rawDesc as EnrichedDescription;
   return {
     ...description,
     id: description?.id || 'default-description-id',
-    __typename: 'DiagramDescription',
     debug: description?.debug || false,
     dropNodeCompatibility: description?.dropNodeCompatibility || [],
     arrangeLayoutDirection: description?.arrangeLayoutDirection || 'DOWN',
