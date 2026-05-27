@@ -27,8 +27,9 @@ export const useArrangeAll = (): UseArrangeAllValue => {
   const { fitView } = useFitView();
   const { elkLayout } = useElkLayout();
 
-  const arrangeAll = async (layoutOptions: LayoutOptions): Promise<void> => {
-    await elkLayout(getNodes(), getEdges(), layoutOptions).then(async (laidOutDiagramWithElk: RawDiagram) => {
+  const arrangeAll = async (layoutOptions: LayoutOptions, nodesIds?: String[]): Promise<void> => {
+    const nodes = nodesIds ? getNodes().filter((node) => nodesIds.includes(node.id)) : getNodes();
+    await elkLayout(nodes, getEdges(), layoutOptions).then(async (laidOutDiagramWithElk: RawDiagram) => {
       const diagramToLayout: RawDiagram = {
         nodes: laidOutDiagramWithElk.nodes,
         edges: laidOutDiagramWithElk.edges,
