@@ -11,7 +11,8 @@
  *     Obeo - initial API and implementation
  *******************************************************************************/
 import { LayoutOptions } from 'elkjs/lib/elk-api';
+import { GQLLayoutGroup } from './useLayoutGroups.types';
 
 export interface UseArrangeAllValue {
-  arrangeAll: (layoutOptions: LayoutOptions) => Promise<void>;
+  arrangeAll: (layoutOptions: LayoutOptions, nodesIds?: GQLLayoutGroup[], forceGlobalLayout?: boolean) => Promise<void>;
 }

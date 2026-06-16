@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { useArrangeAll } from '../layout/arrange-all/useArrangeAll';
 import { useLayoutConfigurations } from '../layout/arrange-all/useLayoutConfigurations';
 import { GQLLayoutConfiguration } from '../layout/arrange-all/useLayoutConfigurations.types';
+import { useLayoutGroups } from '../layout/arrange-all/useLayoutGroups';
 import { ArrangeAllButtonProps, ArrangeAllButtonState } from './ArrangeAllButton.types';
 
 export const ArrangeAllButton = ({ disabled }: ArrangeAllButtonProps) => {
@@ -42,19 +43,27 @@ export const ArrangeAllButton = ({ disabled }: ArrangeAllButtonProps) => {
   const { layoutConfigurations } = useLayoutConfigurations();
   const theme: Theme = useTheme();
 
-  const handleArrangeAll = (layoutConfiguration: GQLLayoutConfiguration) => {
+  const { loadLayoutGroups } = useLayoutGroups();
+
+  const handleArrangeAll = async (layoutConfiguration: GQLLayoutConfiguration) => {
     setState((prevState) => ({
       ...prevState,
       arrangeAllMenuOpen: false,
       arrangeAllInProgress: true,
       lastUsedLayout: layoutConfiguration,
     }));
-    arrangeAll(layoutConfiguration.layoutOptions).then(() =>
+    try {
+      const groups = await loadLayoutGroups();
+
+      await arrangeAll(layoutConfiguration.layoutOptions, groups || []);
+    } catch (e) {
+      console.error(e);
+    } finally {
       setState((prevState) => ({
         ...prevState,
         arrangeAllInProgress: false,
-      }))
-    );
+      }));
+    }
   };
 
   const handleMenuToggle = () =>
@@ -145,7 +154,7 @@ export const ArrangeAllButton = ({ disabled }: ArrangeAllButtonProps) => {
             onClick={handleMenuToggle}
             data-testid="arrange-all-menu-toggle"
             disabled={disabled || state.arrangeAllInProgress}
-            style={{ marginLeft: `-${theme.spacing(1)}`, padding: theme.spacing(0.5) }}>
+            style={{ marginLeft: -theme.spacing(1), padding: theme.spacing(0.5) }}>
             <KeyboardArrowDownIcon />
           </IconButton>
         </div>
