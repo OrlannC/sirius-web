@@ -17,6 +17,7 @@ import type { ComponentProps } from 'react';
 type StoryCustomArgs = {
   autoLayout?: boolean;
   algorithm?: string;
+  aiPrompt?: string;
   nodeNode?: number;
   contentAlign?: string;
   direction?: string;
@@ -44,6 +45,8 @@ type StoryCustomArgs = {
   model?: string;
   iterations?: number;
   maxIterations?: number;
+  fixedGraphSize?: boolean;
+  underlyingLayoutAlgorithm?: string;
   desiredEdgeLength?: number;
   dimension?: string;
 };
@@ -60,7 +63,6 @@ export const getElkForceOptions = (args: Partial<DiagramStoryArgs>): LayoutOptio
 };
 
 export const defaultForceAlgorithmConfiguration = {
-  autoLayout: true,
   nodeNode: 80,
   iterations: 300,
   model: 'FRUCHTERMAN_REINGOLD',
@@ -82,7 +84,6 @@ export const getElkLayeredOptions = (args: Partial<DiagramStoryArgs>): LayoutOpt
 };
 
 export const defaultLayeredAlgorithmConfiguration = {
-  autoLayout: true,
   nodeNode: 80,
   direction: 'DOWN',
   nodeNodeBetweenLayers: 80,
@@ -106,7 +107,6 @@ export const getElkMrTreeOptions = (args: Partial<DiagramStoryArgs>): LayoutOpti
 };
 
 export const defaultMrTreeAlgorithmConfiguration = {
-  autoLayout: true,
   direction: 'DOWN',
   nodeNode: 80,
   edgeNode: 10,
@@ -126,7 +126,6 @@ export const getElkRadialOptions = (args: Partial<DiagramStoryArgs>): LayoutOpti
 };
 
 export const defaultRadialAlgorithmConfiguration = {
-  autoLayout: true,
   nodeNode: 80,
   wedgeCrit: 'NODE_SIZE',
   compactor: 'NONE',
@@ -148,7 +147,6 @@ export const getElkRectPackingOptions = (args: Partial<DiagramStoryArgs>): Layou
 };
 
 export const defaultRectPackingAlgorithmConfiguration = {
-  autoLayout: true,
   nodeNode: 80,
   whiteSpaceStart: 'NONE',
   approStrat: 'GREEDY',
@@ -168,25 +166,27 @@ export const getElkSporeCompactionOptions = (args: Partial<DiagramStoryArgs>): L
 };
 
 export const defaultSporeCompactionAlgorithmConfiguration = {
-  autoLayout: true,
   nodeNode: 80,
   spanningTree: 'CIRCLE_UNDERLAP',
   treeConstrution: 'MINIMUM_SPANNING_TREE',
 };
 
 export const getElkSporeOverlapOptions = (args: Partial<DiagramStoryArgs>): LayoutOptions => {
-  const def = defaultStressAlgorithmConfiguration;
+  const def = defaultSporeOverlapAlgorithmConfiguration;
   return {
-    'elk.algorithm': 'stress',
-    'elk.stress.desiredEdgeLength': String(args.desiredEdgeLength ?? def.desiredEdgeLength),
-    'elk.stress.dimension': args.dimension ?? def.dimension,
+    'elk.algorithm': 'sporeOverlap',
+    'elk.nodeSize.fixedGraphSize': 'true',
+    'elk.underlyingLayoutAlgorithm': args.underlyingLayoutAlgorithm ?? def.underlyingLayoutAlgorithm,
+    'elk.spacing.nodeNode': String(args.nodeNode ?? def.nodeNode),
+    'elk.overlapRemoval.maxIterations': String(args.maxIterations ?? def.maxIterations),
   };
 };
 
 export const defaultSporeOverlapAlgorithmConfiguration = {
-  autoLayout: true,
   nodeNode: 80,
   maxIterations: 64,
+  underlyingLayoutAlgorithm: 'stress',
+  fixedGraphSize: true,
 };
 
 export const getElkStressOptions = (args: Partial<DiagramStoryArgs>): LayoutOptions => {
@@ -199,7 +199,6 @@ export const getElkStressOptions = (args: Partial<DiagramStoryArgs>): LayoutOpti
 };
 
 export const defaultStressAlgorithmConfiguration = {
-  autoLayout: true,
   desiredEdgeLength: 100.0,
   dimension: 'XY',
 };
@@ -235,6 +234,8 @@ export const getElkAllAlgorithmsOptions = (args: Partial<DiagramStoryArgs>): Lay
 export const defaultAllAlgorithmsConfiguration = {
   autoLayout: true,
   algorithm: 'layered',
+  aiPrompt:
+    'You are a senior data visualization engineer. Analyze this technical layout pragmatically. INSTRUCTIONS: 1. Structural Focus: Completely ignore aesthetics (colors, fonts, styling). Focus on edge routing and block placement. 2. Contextual Severity Scale: - Small graph: If it is immediately readable and there are no major errors (squashed text, illogical flow), the score should be high. Do not penalize micro-pixel shifts or unnecessary bends. - Large graph: Be demanding regarding chaos management, crossings, and compactness. 3. Rating out of 10: Evaluate whether the diagram fulfills its informational mission without cognitive effort. Short answer: [Critique] | [Score]/10',
   nodeNode: 80,
 
   directionL: 'DOWN',
@@ -267,6 +268,8 @@ export const defaultAllAlgorithmsConfiguration = {
   iterations: 300,
 
   maxIterations: 64,
+  underlyingLayoutAlgorithm: 'stress',
+  fixedGraphSize: true,
 
   desiredEdgeLength: 100.0,
   dimension: 'XY',
